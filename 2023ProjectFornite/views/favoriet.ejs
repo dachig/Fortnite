@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/favoriet.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <section class="avatarPic">
+    <img src="../images/vraagteken.png" />
+  </section>
+  <%- include('partials/header')%>
+  <div class="charTabel">
+    <section class="testing">
+      <% for(let i=0; i<3;i++){ %>
+        <div class="charSolo">
+        <h1>
+          <a href="/favoriet/<%=i%>"><%= avatarImage[i].name %></a>
+        </h1>
+        <section class="articleAvatar">
+          <a href="/favoriet/<%=i%>"><img src="<%= avatarImage[i].images %>" /></a>
+          <img src="<%= avatarBackpack[i].item.images.icon %>" />
+          <img src="<%= avatarPickaxe[i].item.images.icon %>" />
+        </section>
+      </div>
+        <% } %>
+    </section>
+    </div>
+</body>
+</html>

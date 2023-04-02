@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/infoPage.css">
+</head>
+
+<body>
+  <section class="avatarPic">
+    <img src="../images/vraagteken.png" />
+  </section>
+  <%- include('partials/header')%>
+    <h2 class="itemTopName">
+      <%=character.name%>
+    </h2>
+    <section class="proberen">
+      <section class="avatarInfoFav">
+        <img src="<%= character.images %>" class="profile__image" />
+        <ul name="avatarInformatieDB">
+          <% if(character.desriptition !="" ){ %>
+            <li>
+              <%= character.desriptition %>
+            </li>
+            <%}%>
+              <% if(character.type !="" ){ %>
+                <li>
+                  <%= character.type %>
+                </li>
+                <%}%>
+                  <% if(character.rarity !="" ){ %>
+                    <li>
+                      <%= character.rarity %>.
+                    </li>
+                    <%}%>
+                      <% if(character.series !="" ){ %>
+                        <li>
+                          <%= character.series %>
+                        </li>
+                        <%}%>
+        </ul>
+      </section>
+      <section>
+        <form action="/action_page.php">
+          <label for="wins" class="textForm">Wins (min 0, max 20) </label>
+          <input type="number" id="quantity" name="quantity" min="0" max="20" placeholder="0"> <br>
+          <label for="loses" class="textForm">Loses(max 0, min -20)</label>
+          <input type="number" id="quantity" name="quantity" min="-20" max="0" placeholder="0"> <br>
+          <label for="Notities">Notities</label><br>
+          <textarea name="notitieAvatar" id="notitieAvatar" cols="30" rows="10"></textarea><br>
+          <input type="reset" value="Reset">
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+    </section>
+    <h1 class="itemTitle">Items</h1>
+    <div class="charTabel">
+      <section class="testing">
+        <% for(let i=0; i<4;i++){ %>
+          <div class="charSolo">
+            <h1 class="itemTitle">
+              <%= avatarBackpack[i].item.name %>
+            </h1>
+            <form action="/testing" method="post">
+            <input type="radio" name="<%=i%>" value="backpack">
+            <label for="backpack" name="<%=i%>"><img src="<%= avatarBackpack[i].item.images.icon %>" /></label><br>
+            <input type="radio" name="pickaxe" value="pickaxe">
+            <label for="backpack"><img src="<%= avatarPickaxe[i].item.images.icon %>" /></label><br>
+          </div>
+          <% } %>
+          <input type="reset" value="Reset">
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+    </div>
+    </section>
+    </div>
+    <%- include('partials/footer')%>
+</body>
+
+</html>

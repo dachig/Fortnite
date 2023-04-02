@@ -1,0 +1,49 @@
+html body {
+  background-color: rgba(0, 0, 0, 0.845);
+}
+
+.avatarPic img {
+  height: 100px;
+  width: 100px;
+  margin-top: 0;
+}
+.blacklistLayout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blacklistLayout li {
+  list-style-type: none;
+  flex-basis: 33%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.blacklistLayout img {
+  width: 100%;
+}
+
+.blacklistLayout p {
+  color: white;
+}
+
+.blacklistLayout form {
+  display: flex;
+  align-items: center;
+}
+
+.blacklistLayout textarea {
+  flex-grow: 1;
+}
+
+.blacklistLayout button {
+  margin-left: 10px;
+  padding: 0.56rem;
+}
+.buttonblacklist  {
+  display: flex;
+  flex-direction: row;
+}
+.buttonblacklist textarea {
+  width: 400px;
+}

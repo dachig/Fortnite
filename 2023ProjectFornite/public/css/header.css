@@ -1,0 +1,28 @@
+nav {
+
+  background-color: rgb(58, 58, 58);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 25px;
+}
+
+nav ul {
+  list-style-type: none;
+  gap: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+nav li a {
+  color: white;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+nav li a:hover {
+  color: #6fb1fc;
+}
+
+nav li a:active {
+  color: #03428b;
+}
