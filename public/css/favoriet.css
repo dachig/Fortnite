@@ -1,0 +1,39 @@
+html body {
+  background-color: rgba(0, 0, 0, 0.845);
+}
+
+.charTabel {
+  display: flex;
+  text-align: center;
+  gap: 10px;
+}
+
+.charSolo h1 {
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.charSolo {
+  background-color: #6fb1fc;
+  border-radius: 25px;
+  padding-top: 5px;
+  margin-top: 10px;
+}
+
+.testing {
+  display: table-row;
+  text-align: center;
+}
+
+.testing h1 {
+  color: wheat;
+}
+
+.testing img {
+  width: 25%;
+}
+.avatarPic img {
+  height: 100px;
+  width: 100px;
+  margin-top: 0;
+}
