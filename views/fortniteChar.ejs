@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/infoPage.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  
+  <section class="avatarPic">
+    <img src="../images/vraagteken.png" />
+  </section>
+  <nav>
+    <ul>
+      <li class="browser"><a href="/">Landing Page</a></li>
+      <li class="ipad"><a href="/">&#8592;</a></li>
+      <li><a href="/fortniteHome">Home</a></li>
+      <li><a href="/favoriet-images">Favorieten</a></li>
+      <li><a href="/blacklist">Blacklists</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>    <h2 class="itemTopName">
+      <%=character.name%>
+    </h2>
+    <section class="proberen">
+      <section class="avatarInfoFav">
+        <img src="<%= character.image %>" class="profile__image" />
+        <div class="profile__details">
+          <div class="infoAvatars">
+            <% if(apiImage.description){ %>
+              <p><span>description:</span>
+                <%= apiImage.description %>
+              </p>
+              <% } %>
+                <% if(apiImage.type){ %>
+                  <p><span>Type:</span>
+                    <%= apiImage.type %>
+                  </p>
+                  <% } %>
+                    <% if(apiImage.rarity){ %>
+                      <p><span>Rarrity:</span>
+                        <%= apiImage.rarity %>
+                      </p>
+                      <% } %>
+          </div>
+          <div class="infoForm">
+            <form action="/action_page.php">
+              <label for="wins" class="textForm"><i id="thumbs-up" class="fa fa-thumbs-up"></i></label>
+              <input type="number" id="quantity" name="quantity" min="0" max="5" placeholder="0">
+              <label for="loses" class="textForm"><i id="thumbs-down" class="fa fa-thumbs-down"></i></label>
+              <input type="number" id="quantity" name="quantity" min="-5" max="0" placeholder="0"> <br><br>
+              <label class="titleForm" for="Notities">Notities</label><br>
+              <textarea name="notitieAvatar" id="notitieAvatar" cols="30" rows="10"></textarea><br><br>
+              <div class="formSendButton">
+                <input type="reset" value="Reset">
+                <input type="submit" value="Submit">
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </section>
+    <h1 class="itemTitle">Shop</h1>
+    <div class="charTabel">
+      <form action="/testing" method="post">
+        <div class="formSendButton">
+          <input type="reset" value="Reset">
+          <input type="submit" value="Submit">
+        </div>
+        <section class="testing">
+          <% for(let i=0; i<4;i++){ %>
+            <div class="charSolo">
+              <div class="TitleInputForm">
+                <h1 class="itemTitle">
+                  <%= avatarBackpack[i].item.name %>
+                </h1>
+                <input type="radio" name="backpack" value="backpack">
+              </div>
+              <label for="backpack" name="<%=i%>"><img src="<%= avatarBackpack[i].item.images.icon %>" /></label> <br>
+              <div class="TitleInputForm">
+                <h1 class="itemTitle">
+                  <%= avatarBackpack[i].item.name %>
+                </h1>
+                <input type="radio" name="pickaxe" value="backpack">
+              </div>
+              <label for="pickaxe" name="<%=i%>"><img src="<%= avatarPickaxe[i].item.images.icon %>" /></label>
+            </div>
+            <% } %>
+        </section>
+      </form>
+    </div>
+    </section>
+    </div>
+    <footer>
+      <section>
+          <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
+      </section>
+      <section>
+          <img src="../images/ap.png">
+      </section>
+  </footer></body>
+
+</html>

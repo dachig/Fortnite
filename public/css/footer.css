@@ -1,0 +1,17 @@
+footer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgb(58, 58, 58);
+    padding: 20px;
+    color: white;
+    border-radius: 25px;
+    font-size: 1.25rem;
+
+}
+img{
+    height: 50px;
+    width: 100px;
+    padding-left: 20px;
+}

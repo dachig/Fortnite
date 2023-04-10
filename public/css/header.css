@@ -1,5 +1,17 @@
-nav {
+/*HEADER*/
+/*LOGO*/
+.avatarPic{
+  text-align: center;
+}
 
+/*MENU*/
+.browser{
+  display: contents;
+}
+.ipad{
+  display: none;
+}
+nav {
   background-color: rgb(58, 58, 58);
   padding-top: 10px;
   padding-bottom: 10px;
@@ -7,9 +19,12 @@ nav {
 }
 
 nav ul {
+  
   list-style-type: none;
   gap: 50px;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -25,4 +40,42 @@ nav li a:hover {
 
 nav li a:active {
   color: #03428b;
+}
+
+/*RESPONSIVE MENU*/
+
+/*IPAD*/
+@media only screen and (max-width: 820px) {
+  .browser{
+    display: none;
+  }
+  .ipad{
+    display: contents;
+  }
+}
+
+/*GSM*/
+@media only screen and (max-width: 675px) {
+  nav {
+    background-color: rgb(58, 58, 58);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin-left: 20%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  .browser{
+    display: contents;
+  }
+  .ipad{
+    display: none;
+  }
 }

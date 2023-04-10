@@ -4,25 +4,33 @@ html body {
 
 .charTabel {
   display: flex;
-  text-align: center;
+  justify-content: center;
   gap: 10px;
 }
 
 .charSolo h1 {
-  text-decoration: underline;
+  padding-top: 10px;
   text-transform: uppercase;
+  font-size: 2rem;
 }
 
 .charSolo {
   background-color: #6fb1fc;
   border-radius: 25px;
-  padding-top: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90vw;
+}
+.articleAvatar > img{
+  height: 280px;
 }
 
 .testing {
-  display: table-row;
   text-align: center;
+}
+.testing a {
+  text-decoration: none;
+  color: white;
 }
 
 .testing h1 {
@@ -37,3 +45,29 @@ html body {
   width: 100px;
   margin-top: 0;
 }
+
+/*------------------------------------------------------Media queries---------------------------------------------------------*/
+@media all and (max-width: 1350px) {
+  .articleAvatar > img{
+    height: 240px;
+  }
+}
+@media all and (max-width: 950px) {
+  .articleAvatar > img{
+    height: 200px;
+  }
+}
+
+@media all and (max-width: 675px) {
+  .articleAvatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+      
+  }
+  .articleAvatar > img{
+    height: 200px;
+    width: 200px;
+  }
+  }

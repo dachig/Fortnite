@@ -4,24 +4,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/blacklist.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/header.css" />
+
+
   <title>Document</title>
 </head>
 <body>
+  
   <section class="avatarPic">
     <img src="../images/vraagteken.png" />
   </section>
-  <%- include('partials/header')%>
-  <section class="blacklistLayout">
+  <nav>
+    <ul>
+      <li class="browser"><a href="/">Landing Page</a></li>
+      <li class="ipad"><a href="/">&#8592;</a></li>
+      <li><a href="/fortniteHome">Home</a></li>
+      <li><a href="/favoriet-images">Favorieten</a></li>
+      <li><a href="/blacklist">Blacklists</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>  <section class="blacklistLayout">
     <ul>
       <% for (let i = 0; i < blacklist.length; i++) { %>
         <li>
           <img src="<%= blacklist[i].images %>">
-          <p>Name: <%= blacklist[i].name %></p>
-          <p>Blacklisted Reason: <%= blacklist[i].blacklistReason %></p>
+          <p>Name: <%= blacklist[i].name %></p><br>
+          <p>Blacklisted Reason:<br><br> <%= blacklist[i].blacklistReason %></p>
           <div class="buttonblacklist">
             <form method="post" action="/blacklist/<%= i %>">
-              <textarea name="blacklistReason" >You like to change the reason why you blacklist this avatar?</textarea>
+              <textarea rows="4" name="blacklistReason" >Enter a new reason and click 'save' to update your blacklist reason. Alternativly, you can click 'delete' to delete from the blacklist.</textarea>
               <button type="submit">Save</button>
             </form>
             <form method="post" action="/blacklist/<%= i %>">
@@ -33,9 +47,13 @@
       <% } %>
     </ul>
 </section> 
-  <%- include('partials/footer')%>
-  
-  
-</body>
+<footer>
+  <section>
+      <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
+  </section>
+  <section>
+      <img src="../images/ap.png">
+  </section>
+</footer></body>
 
 </html>

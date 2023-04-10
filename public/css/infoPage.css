@@ -23,23 +23,40 @@ ul li {
   color: azure;
 }
 .avatarPic img {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   margin-top: 0;
 }
 .avatarInfoFav{
   display: flex;
-}
-.charTabel{
-  display: flex;
-  justify-content: space-between;
-  gap: 0.2rem;
   align-items: center;
-  width: 80%;
+  justify-content: space-evenly;
+}
+.infoAvatars p {
+  color:lightsalmon;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+}
+.infoForm{
+  text-align: center;
+  padding-top: 1rem;
+}
+.titleForm{
+  color: white;
+}
+.infoForm textarea{
+  width: 20rem;
+}
+#thumbs-up{
+  color: green;
+}
+#thumbs-down{
+  color: red;
 }
 .charTabel img{
-  width: 350px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
 }
 .testing{
   display: flex;
@@ -61,7 +78,6 @@ ul li {
 }
 .charSolo{
   border: 1px solid white;
-  align-items: center;
 }
 .itemTopName{
   text-align: center;
@@ -69,9 +85,24 @@ ul li {
   text-decoration: underline;
   text-transform: uppercase;
 }
-.proberen{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+.formSendButton{
   text-align: center;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.formSendButton input{
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.formSendButton input:hover{
+  text-transform: uppercase;
+  background-color: brown;
+}
+.TitleInputForm{
+  text-align: center;
+  border-top: 1px solid white;
+}
+.profile__image{
+  width: 400px;
+  height: 400px;
 }

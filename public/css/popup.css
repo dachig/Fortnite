@@ -12,6 +12,16 @@ body {
 
 body {
   background-color: antiquewhite;
+
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.25rem;
+  word-spacing: 0.25rem;
 }
 
 .modal {
@@ -78,7 +88,16 @@ body {
 /*------------------------------------------------------LandingPage structure---------------------------------------------------------*/
 .lp-Line1 {
   display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
   text-align: center;
+  padding: 2rem 0rem;
+}
+
+.lp-Line1 article {
+  width: 50%;
+  margin: 1rem 0rem;
+  position: relative;
 }
 
 .lp-Line1 img {
@@ -86,9 +105,10 @@ body {
   height: auto;
 }
 
-.testing {
-  text-transform: uppercase;
-  transform: translateY(-500%);
+.lp-Line1 img:hover {
+  width: 72%;
+  opacity: 0.9;
+  transition: 500ms ease-in-out;
 }
 
 .testing button:hover {
@@ -97,13 +117,136 @@ body {
   font-weight: bold;
 }
 
-button {
+.testing button {
   background-color: #6fb1fc;
   padding: 10px;
   border-radius: 50px;
+  /*transform: translateY(-500%);*/
   border: solid black 2px;
-
+  position: absolute;
+  top: 50%;
+  left: 44%;
 }
+
 button a {
   text-decoration: none;
+}
+
+/*------------------------------------------------------Media queries---------------------------------------------------------*/
+
+@media all and (max-width: 1440px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media all and (max-width:1220px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .testing button {
+    left: 43%;
+  }
+}
+
+@media all and (max-width:1150px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .testing button {
+    left: 43%;
+  }
+}
+
+@media all and (max-width:1050px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+  
+  
+}
+
+@media all and (max-width: 1024px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .testing button {
+    left: 40%;
+  } 
+  
+  .lp-Line1 img {
+    width: 80%;
+    height: auto;
+  }
+}
+
+@media all and (max-width:900px) {
+  
+}
+
+@media all and (max-width:800px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@media all and (max-width:720px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .lp-Line1 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lp-Line1 article {
+    width: 100%;
+    margin-bottom: 4rem;
+  }
+
+  .testing button {
+    left: 40%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:650px){
+  .testing button {
+    left: 40%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:600px){
+  .testing button {
+    left: 38%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .testing button {
+    left: 35%;
+    font-size: 0.9rem;
+  }
+}
+
+@media all and (max-width:360px) {
+  h1 {
+    font-size: 1rem;
+  }
+
+  .testing button {
+    left: 35%;
+    font-size: 0.7rem;
+  }
+
 }
