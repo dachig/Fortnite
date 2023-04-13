@@ -3,7 +3,10 @@
 .avatarPic{
   text-align: center;
 }
-
+.avatarPic img{
+  height: 100px;
+  width: 100px;
+}
 /*MENU*/
 .browser{
   display: contents;
@@ -78,4 +81,10 @@ nav li a:active {
   .ipad{
     display: none;
   }
+  .avatarPic img{
+    height: 50px;
+    width: 50px;
+  }
+  
 }
+

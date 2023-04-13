@@ -3,67 +3,96 @@
 *::before {
   box-sizing: border-box;
 }
+
 html,
 body {
   margin: 0;
   padding: 0;
 }
+
 body {
   background-color: rgba(0, 0, 0, 0.845);
   height: 100vh;
+
 }
-ul li {
+
+main {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+ul li:not(nav ul li) {
   color: white;
   list-style: none;
   text-transform: uppercase;
   font-weight: 500;
-  font-size:600;
+  font-size: 600;
 }
+
 .textForm {
   color: azure;
 }
-.avatarPic img {
-  height: 50px;
-  width: 50px;
-  margin-top: 0;
-}
-.avatarInfoFav{
+
+.avatarInfoFav {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
+
+.avatarInfoFav img {
+  background: linear-gradient(to right, #4364f7, #6fb1fc);
+  border-radius: 10px;
+
+}
+
 .infoAvatars p {
-  color:lightsalmon;
+  color: #6fb1fc;
   text-transform: uppercase;
   font-weight: bold;
   text-align: center;
 }
-.infoForm{
+
+.infoAvatars span {
+  color: white;
+  text-decoration: underline;
+}
+
+.infoForm {
   text-align: center;
   padding-top: 1rem;
 }
-.titleForm{
+
+.titleForm {
   color: white;
 }
-.infoForm textarea{
+
+.infoForm textarea {
   width: 20rem;
+  border-radius: 10px;
 }
-#thumbs-up{
+
+#thumbs-up {
   color: green;
 }
-#thumbs-down{
+
+#thumbs-down {
   color: red;
 }
-.charTabel img{
+
+.charTabel img {
   width: 250px;
   height: 250px;
 }
-.testing{
+
+.testing {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
-.itemTitle{
+
+
+.itemTitle {
   color: white;
   text-transform: uppercase;
   font-weight: 400;
@@ -72,37 +101,75 @@ ul li {
   font-weight: bold;
   text-align: center;
 }
-.itemName{
+
+.itemName {
   align-items: center;
   color: white;
 }
-.charSolo{
-  border: 1px solid white;
+
+.charSolo {
+  border: 2px solid #6fb1fc;
 }
-.itemTopName{
+
+.itemTopName {
   text-align: center;
   color: aliceblue;
   text-decoration: underline;
   text-transform: uppercase;
+  font-size: 1.5rem;
+  padding: 20px
 }
-.formSendButton{
+
+.formSendButton {
   text-align: center;
   margin-bottom: 1rem;
   text-transform: uppercase;
 }
-.formSendButton input{
+
+.formSendButton input {
+  background-color: #6fb1fc;
+  border-radius: 10px;
   text-transform: uppercase;
   cursor: pointer;
 }
-.formSendButton input:hover{
+
+.formSendButton input:hover {
   text-transform: uppercase;
   background-color: brown;
 }
-.TitleInputForm{
+
+.TitleInputForm {
   text-align: center;
-  border-top: 1px solid white;
+  border-top: 2px solid #6fb1fc;
+  
 }
-.profile__image{
+
+.profile__image {
   width: 400px;
   height: 400px;
+}
+
+/*------------------------------------------------------Media queries---------------------------------------------------------*/
+
+@media only screen and (max-width: 1250px) {
+  .avatarInfoFav {
+    flex-direction: column;
+  }
+
+  .infoAvatars {
+    padding-top: 15px;
+    padding-bottom: 40px;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .testing div{
+    flex-basis: 40%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .testing {
+    flex-direction: column;
+  }
 }

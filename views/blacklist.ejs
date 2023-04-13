@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,8 +13,9 @@
 
   <title>Document</title>
 </head>
+
 <body>
-  
+
   <section class="avatarPic">
     <img src="../images/vraagteken.png" />
   </section>
@@ -26,16 +28,21 @@
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
-  </nav>  <section class="blacklistLayout">
+  </nav>
+  <section class="blacklistLayout">
     <ul>
-      <% for (let i = 0; i < blacklist.length; i++) { %>
+      <% for (let i=0; i < blacklist.length; i++) { %>
         <li>
           <img src="<%= blacklist[i].images %>">
-          <p>Name: <%= blacklist[i].name %></p><br>
-          <p>Blacklisted Reason:<br><br> <%= blacklist[i].blacklistReason %></p>
+          <p>Name: <%= blacklist[i].name %>
+          </p><br>
+          <p>Blacklisted Reason:<br><br>
+            <%= blacklist[i].blacklistReason %>
+          </p>
           <div class="buttonblacklist">
             <form method="post" action="/blacklist/<%= i %>">
-              <textarea rows="4" name="blacklistReason" >Enter a new reason and click 'save' to update your blacklist reason. Alternativly, you can click 'delete' to delete from the blacklist.</textarea>
+              <textarea rows="4"
+                name="blacklistReason">Edit blacklist reason</textarea>
               <button type="submit">Save</button>
             </form>
             <form method="post" action="/blacklist/<%= i %>">
@@ -44,16 +51,17 @@
             </form>
           </div>
         </li>
-      <% } %>
+        <% } %>
     </ul>
-</section> 
-<footer>
-  <section>
+  </section>
+  <footer>
+    <section>
       <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
-  </section>
-  <section>
+    </section>
+    <section>
       <img src="../images/ap.png">
-  </section>
-</footer></body>
+    </section>
+  </footer>
+</body>
 
 </html>

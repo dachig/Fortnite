@@ -27,9 +27,12 @@
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
-  </nav>    <h2 class="itemTopName">
+  </nav>  
+  <main> 
+  <h2 class="itemTopName">
       <%=character.name%>
     </h2>
+    <br>
     <section class="proberen">
       <section class="avatarInfoFav">
         <img src="<%= character.image %>" class="profile__image" />
@@ -57,7 +60,7 @@
               <input type="number" id="quantity" name="quantity" min="0" max="5" placeholder="0">
               <label for="loses" class="textForm"><i id="thumbs-down" class="fa fa-thumbs-down"></i></label>
               <input type="number" id="quantity" name="quantity" min="-5" max="0" placeholder="0"> <br><br>
-              <label class="titleForm" for="Notities">Notities</label><br>
+              <label class="titleForm" for="Notities">Notes</label><br><br>
               <textarea name="notitieAvatar" id="notitieAvatar" cols="30" rows="10"></textarea><br><br>
               <div class="formSendButton">
                 <input type="reset" value="Reset">
@@ -69,6 +72,7 @@
       </section>
     </section>
     <h1 class="itemTitle">Shop</h1>
+    <br>
     <div class="charTabel">
       <form action="/testing" method="post">
         <div class="formSendButton">
@@ -99,6 +103,7 @@
     </div>
     </section>
     </div>
+  </main>
     <footer>
       <section>
           <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
