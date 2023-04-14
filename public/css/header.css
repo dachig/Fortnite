@@ -68,12 +68,12 @@ nav li a:active {
   
   nav ul {
     list-style-type: none;
-    margin-left: 20%;
     gap: 10px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
+    text-align: center;
   }
   .browser{
     display: contents;
