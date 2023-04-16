@@ -10,8 +10,8 @@ footer{
     font-size: 1.25rem;
 
 }
-img{
-    height: 50px;
-    width: 100px;
-    padding-left: 20px;
+footer img{
+    height: 20px;
+    width: 40px;
+    margin-left: 20px;
 }

@@ -4,6 +4,7 @@ html body {
 
 .charTabel {
   padding-top: 50px;
+  padding-bottom: 50px;
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -13,6 +14,8 @@ html body {
   padding-top: 10px;
   text-transform: uppercase;
   font-size: 2rem;
+  font-weight: bold;
+  padding-bottom: 15px;
 }
 
 .charSolo {
@@ -23,11 +26,15 @@ html body {
   width: 90vw;
 }
 .articleAvatar > img{
-  height: 280px;
+  width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .testing {
   text-align: center;
+  
 }
 .testing a {
   text-decoration: none;
@@ -48,17 +55,6 @@ html body {
 }
 
 /*------------------------------------------------------Media queries---------------------------------------------------------*/
-@media all and (max-width: 1350px) {
-  .articleAvatar > img{
-    height: 240px;
-  }
-}
-@media all and (max-width: 950px) {
-  .articleAvatar > img{
-    height: 200px;
-  }
-}
-
 @media all and (max-width: 675px) {
   .articleAvatar{
     display: flex;
@@ -67,8 +63,8 @@ html body {
   
       
   }
-  .articleAvatar > img{
-    height: 200px;
-    width: 200px;
+   .articleAvatar > img{
+    height: 250px;
+    width: 250px;
   }
   }

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  
+
   <section class="avatarPic">
     <img src="../images/vraagteken.png" />
   </section>
@@ -27,9 +27,9 @@
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
-  </nav>  
-  <main> 
-  <h2 class="itemTopName">
+  </nav>
+  <main>
+    <h2 class="itemTopName">
       <%=character.name%>
     </h2>
     <br>
@@ -71,46 +71,49 @@
         </div>
       </section>
     </section>
+    <br><br><br>
     <h1 class="itemTitle">Shop</h1>
     <br>
     <div class="charTabel">
       <form action="/testing" method="post">
-        <div class="formSendButton">
-          <input type="reset" value="Reset">
-          <input type="submit" value="Submit">
-        </div>
         <section class="testing">
           <% for(let i=0; i<4;i++){ %>
             <div class="charSolo">
               <div class="TitleInputForm">
-                <h1 class="itemTitle">
+                <h2 class="itemTitleh2">
                   <%= avatarBackpack[i].item.name %>
-                </h1>
+                </h2>
                 <input type="radio" name="backpack" value="backpack">
               </div>
               <label for="backpack" name="<%=i%>"><img src="<%= avatarBackpack[i].item.images.icon %>" /></label> <br>
               <div class="TitleInputForm">
-                <h1 class="itemTitle">
+                <h2 class="itemTitleh2">
                   <%= avatarBackpack[i].item.name %>
-                </h1>
+                </h2>
                 <input type="radio" name="pickaxe" value="backpack">
               </div>
               <label for="pickaxe" name="<%=i%>"><img src="<%= avatarPickaxe[i].item.images.icon %>" /></label>
             </div>
             <% } %>
         </section>
+        <br>
+        <div class="formSendButton">
+          <input type="reset" value="Reset">
+          <input type="submit" value="Submit">
+        </div>
       </form>
     </div>
     </section>
     </div>
   </main>
-    <footer>
-      <section>
-          <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
-      </section>
-      <section>
-          <img src="../images/ap.png">
-      </section>
-  </footer></body>
+  <footer>
+    <section>
+      <h2>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h2>
+    </section>
+    <section>
+      <img src="../images/ap.png">
+    </section>
+  </footer>
+</body>
 
 </html>

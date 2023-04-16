@@ -105,11 +105,7 @@ h1 {
   height: auto;
 }
 
-.lp-Line1 img:hover {
-  width: 72%;
-  opacity: 0.9;
-  transition: 500ms ease-in-out;
-}
+
 
 .testing button:hover {
   background-color: brown;

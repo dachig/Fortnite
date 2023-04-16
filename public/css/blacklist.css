@@ -24,13 +24,13 @@ body {
 
 .blacklistLayout {
   padding-top: 50px;
+  padding-bottom: 50px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
 
 .blacklistLayout ul {
-  padding-top: 50px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -88,6 +88,16 @@ button {
   border-radius: 10px;
 }
 
+.charName{
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.blacklistReason{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 /*------------------------------------------------------Media queries---------------------------------------------------------*/
 
 @media only screen and (max-width: 1130px) {
@@ -99,10 +109,22 @@ button {
   .buttonblacklist {
     flex-direction: column;
   }
-  
+
 
   .blacklistLayout form {
     display: block;
     padding-top: 2px;
+  }
+
+  .blacklistLayout button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    margin-top: 5px;
+  }
+  .buttonblacklist textarea
+  {
+    width: 320px;
   }
 }

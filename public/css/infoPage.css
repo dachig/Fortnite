@@ -42,19 +42,23 @@ ul li:not(nav ul li) {
 .avatarInfoFav img {
   background: linear-gradient(to right, #4364f7, #6fb1fc);
   border-radius: 10px;
-
 }
 
 .infoAvatars p {
   color: #6fb1fc;
   text-transform: uppercase;
   font-weight: bold;
-  text-align: center;
+  
+  text-align: right;
+  line-height: 30px;
 }
 
 .infoAvatars span {
   color: white;
   text-decoration: underline;
+  text-align: right;
+  float: left;
+  margin-right: 10px;
 }
 
 .infoForm {
@@ -96,7 +100,17 @@ ul li:not(nav ul li) {
   color: white;
   text-transform: uppercase;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1.5rem;
+  text-decoration: underline;
+  font-weight: bold;
+  text-align: center;
+}
+.itemTitleh2 {
+  margin-top: 5px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.75rem;
   text-decoration: underline;
   font-weight: bold;
   text-align: center;
@@ -171,5 +185,22 @@ ul li:not(nav ul li) {
 @media only screen and (max-width: 850px) {
   .testing {
     flex-direction: column;
+  }
+  .avatarInfoFav img{
+    width: 75%;
+    height: auto;
+  }
+}
+@media only screen and (max-width: 675px) {
+  .testing {
+    flex-direction: column;
+  }
+  .avatarInfoFav img{
+    width: 90%;
+    height: auto;
+  }
+  .infoAvatars{
+    margin-left: 10px;
+  margin-right: 10px;
   }
 }
