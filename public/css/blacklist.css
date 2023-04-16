@@ -1,0 +1,108 @@
+ */
+  *,
+*::after,
+::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.845);
+  height: 100vh;
+}
+
+.avatarPic img {
+  height: 100px;
+  width: 100px;
+  margin-top: 0;
+}
+
+.blacklistLayout {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.blacklistLayout ul {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blacklistLayout li {
+  text-align: center;
+  list-style-type: none;
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.blacklistLayout li > img {
+  border-radius: 10px;
+  background: linear-gradient(to right, #4364f7, #6fb1fc);
+}
+
+.blacklistLayout img {
+  width: 250px;
+  height: 250px;
+}
+
+.blacklistLayout p {
+  color: white;
+}
+
+.blacklistLayout form {
+  display: flex;
+}
+
+.blacklistLayout textarea {
+  flex-grow: 1;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.blacklistLayout button {
+  margin-left: 10px;
+  padding: 0.56rem;
+  background-color: #6fb1fc;
+}
+
+.buttonblacklist {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonblacklist textarea {
+  width: 400px;
+}
+
+button {
+  border-radius: 10px;
+}
+
+/*------------------------------------------------------Media queries---------------------------------------------------------*/
+
+@media only screen and (max-width: 1130px) {
+.blacklistLayout li {
+  width: 100%; /* set width to 100% to display one column per item */
+}
+}
+@media only screen and (max-width: 675px) {
+  .buttonblacklist {
+    flex-direction: column;
+  }
+  
+
+  .blacklistLayout form {
+    display: block;
+    padding-top: 2px;
+  }
+}

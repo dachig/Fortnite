@@ -1,0 +1,252 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: antiquewhite;
+
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.25rem;
+  word-spacing: 0.25rem;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/*------------------------------------------------------LandingPage structure---------------------------------------------------------*/
+.lp-Line1 {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  text-align: center;
+  padding: 2rem 0rem;
+}
+
+.lp-Line1 article {
+  width: 50%;
+  margin: 1rem 0rem;
+  position: relative;
+}
+
+.lp-Line1 img {
+  width: 70%;
+  height: auto;
+}
+
+.lp-Line1 img:hover {
+  width: 72%;
+  opacity: 0.9;
+  transition: 500ms ease-in-out;
+}
+
+.testing button:hover {
+  background-color: brown;
+  font-size: 600;
+  font-weight: bold;
+}
+
+.testing button {
+  background-color: #6fb1fc;
+  padding: 10px;
+  border-radius: 50px;
+  /*transform: translateY(-500%);*/
+  border: solid black 2px;
+  position: absolute;
+  top: 50%;
+  left: 44%;
+}
+
+button a {
+  text-decoration: none;
+}
+
+/*------------------------------------------------------Media queries---------------------------------------------------------*/
+
+@media all and (max-width: 1440px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media all and (max-width:1220px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .testing button {
+    left: 43%;
+  }
+}
+
+@media all and (max-width:1150px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .testing button {
+    left: 43%;
+  }
+}
+
+@media all and (max-width:1050px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+  
+  
+}
+
+@media all and (max-width: 1024px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .testing button {
+    left: 40%;
+  } 
+  
+  .lp-Line1 img {
+    width: 80%;
+    height: auto;
+  }
+}
+
+@media all and (max-width:900px) {
+  
+}
+
+@media all and (max-width:800px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@media all and (max-width:720px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .lp-Line1 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lp-Line1 article {
+    width: 100%;
+    margin-bottom: 4rem;
+  }
+
+  .testing button {
+    left: 40%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:650px){
+  .testing button {
+    left: 40%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:600px){
+  .testing button {
+    left: 38%;
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .testing button {
+    left: 35%;
+    font-size: 0.9rem;
+  }
+}
+
+@media all and (max-width:360px) {
+  h1 {
+    font-size: 1rem;
+  }
+
+  .testing button {
+    left: 35%;
+    font-size: 0.7rem;
+  }
+
+}

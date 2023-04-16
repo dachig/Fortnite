@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/favoriet.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/header.css" />
+
+
+  <title>Document</title>
+</head>
+<body>
+  
+  <section class="avatarPic">
+    <img src="../images/vraagteken.png" />
+  </section>
+  <nav>
+    <ul>
+      <li class="browser"><a href="/">Landing Page</a></li>
+      <li class="ipad"><a href="/">&#8592;</a></li>
+      <li><a href="/fortniteHome">Home</a></li>
+      <li><a href="/favoriet-images">Favorieten</a></li>
+      <li><a href="/blacklist">Blacklists</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>  
+  <div class="charTabel">
+    <section class="testing">
+      <% for (let i = 0; i < favoriteImages.length; i++) { %>
+        <div class="charSolo">
+        <h1>
+          <a href="/favoriet?id=<%= i %>"><%= favoriteImages[i].name %></a>
+        </h1>
+        <section class="articleAvatar">
+          <img src="<%= favoriteImages[i].image %>">
+          <% if (i < apiBackpack.length) { %>
+            <img src="<%= apiBackpack[i].item.images.icon %>" />
+          <% } %>
+          <% if (i < apiWapons.length) { %>
+            <img src="<%= apiWapons[i].item.images.icon %>" />
+          <% } %>
+        </section>
+      </div>
+      <% } %>
+    </section>
+    </div>
+    <footer>
+      <section>
+          <h1>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h1>
+      </section>
+      <section>
+          <img src="../images/ap.png">
+      </section>
+  </footer>
+</body>
+
+</html>
