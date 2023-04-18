@@ -71,3 +71,17 @@ body{
   color: #000000;
   text-decoration: none;
 }
+
+/* loginInfo css */
+
+.infoForm {
+  text-align: center;
+  padding-top: 50px;
+  color: white;
+  padding-bottom: 15px;
+}
+.Gegevens{
+  text-align: center;
+  color: white;
+  padding-bottom: 50px;
+}

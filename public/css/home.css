@@ -174,7 +174,7 @@ li {
 
 }
 
-@media all and (max-width: 780px) {
+@media all and (max-width: 820px) {
   .mainBodyHome {
     flex-direction: column;
   }
