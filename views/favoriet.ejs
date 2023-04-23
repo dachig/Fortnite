@@ -23,7 +23,7 @@
       <li class="browser"><a href="/">Landing Page</a></li>
       <li class="ipad"><a href="/">&#8592;</a></li>
       <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet-images">Favorieten</a></li>
+      <li><a href="/favoriet">Favorieten</a></li>
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
@@ -33,10 +33,10 @@
       <% for (let i = 0; i < favoriteImages.length; i++) { %>
         <div class="charSolo">
         <h1>
-          <a href="/favoriet?id=<%= i %>"><%= favoriteImages[i].name %></a>
+          <a href="/favoriet/<%=favoriteImages[i]._id%>"><%= favoriteImages[i].name %></a>
         </h1>
         <section class="articleAvatar">
-          <img src="<%= favoriteImages[i].image %>">
+          <img src="<%= favoriteImages[i].images %>">
           <% if (i < apiBackpack.length) { %>
             <img src="<%= apiBackpack[i].item.images.icon %>" />
           <% } %>

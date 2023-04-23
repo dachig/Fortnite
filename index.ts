@@ -25,18 +25,19 @@ let apiImages: any = [];
 let apiWapons: any = [];
 let apiBackpack: any = [];
 let blacklist: any = [];
-let favorietAvatars: any = [];
+let avatars:any[] = [];
 app.get('/', (req, res) => {
   res.render("landingpage");
 });
-
 app.get('/fortniteHome', async (req, res) => {
   try {
     await client.connect();
     let apiCall = client.db('fortnite').collection('api');
+    let favorietCollection= client.db('fortnite').collection('favoriet');
     let fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
+    let favorietSter=await favorietCollection.find({}).toArray();
     let record = fortniteResponse.data;
-    let avatars = [];
+    avatars = [];
     for (let i = 0; i < record.data.length; i++) {
       let random = Math.floor(Math.random() * record.data.length);
       let item = record.data[random].item;
@@ -61,7 +62,8 @@ app.get('/fortniteHome', async (req, res) => {
       }
     }
     res.render("fortniteHome", {
-      avatarImage: avatars
+      avatarImage: avatars,
+      ster:favorietSter
     });
   }
   catch (error) {
@@ -71,22 +73,26 @@ app.get('/fortniteHome', async (req, res) => {
     client.close();
   }
 });
-let favoriteImages: any = [];
 app.post('/favoriet', async (req, res) => {
   try {
     await client.connect();
-    const favorietCollection = client.db('fortnite').collection('favoriet');
-    const apiCall = client.db('fortnite').collection('api');
-    
-    const info = req.body;
-    const apiItem = await apiCall.findOne({ name: info.name });
-    const id = apiItem ? apiItem._id : null;
+    let favorietCollection = client.db('fortnite').collection('favoriet');
+    let apiCall = client.db('fortnite').collection('api');
+    let info = req.body;
 
-    await favorietCollection.insertOne({
-      name: info.name,
-      image: info.image,
-      id: id
-    });
+    const item = await apiCall.findOne({ name: info.name });
+    if (!item) {
+      return res.status(404).send('Item not found in API');
+    }
+    const favoriet = {
+      name: item.name,
+      images: item.images,
+      description: item.description,
+      type: item.type,
+      rarity: item.rarity,
+      series: item.series
+    };
+    await favorietCollection.insertOne(favoriet);
 
     res.redirect('/fortniteHome');
   } catch (e) {
@@ -96,7 +102,7 @@ app.post('/favoriet', async (req, res) => {
     await client.close();
   }
 });
-app.get('/favoriet-images', async (req, res) => {
+app.get('/favoriet', async (req, res) => {
   try {
     await client.connect();
     let favorietCollection = await client.db('fortnite').collection('favoriet');
@@ -122,45 +128,56 @@ app.get('/favoriet-images', async (req, res) => {
     });
 
   } catch (e) {
+    res.render('error');
 
   } finally {
     client.close();
   }
 });
 
-app.get("/favoriet", async (req, res) => {
-  const id = parseInt(req.query.id?.toString() ?? "-1");
-  if (id < 0 || id >= favoriteImages.length) {
-    return res.render("error");
-  }
-  const favoriteImage = favoriteImages[id];
-  let apiImage = apiImages.find((apiImage: any) => apiImage.id === favoriteImage.id);
-  let apiBackpack = [];
-  let apiWapons = [];
-  const fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
-  const record = fortniteResponse.data;
-  for (let i = 0; i <= record.data.length; i++) {
-    const random = Math.floor(Math.random() * record.data.length);
-    if (record.data[random].item.type === "backpack") {
-      apiBackpack.push(record.data[random]);
+app.get("/favoriet/:id", async (req, res) => {
+  try {
+    await client.connect();
+    let favorietCollection = await client.db('fortnite').collection('favoriet');
+    let backpackCollection = await client.db('fortnite').collection('backpack');
+    let pickaxeCollection = await client.db('fortnite').collection('backpack');
+    let id:string = req.params.id;
+    
+    let findFavoriet = await favorietCollection.findOne<Avatar>({_id:new ObjectId(id)});
+    if(!findFavoriet){
+      res.render('error');
     }
-    if (record.data[random].item.type === "pickaxe") {
-      apiWapons.push(record.data[random]);
+    let fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
+    const record = fortniteResponse.data;
+    
+    let apiBackpack = [];
+    let apiWapons = [];
+    for (let i = 0; i <= record.data.length; i++) {
+      const random = Math.floor(Math.random() * record.data.length);
+      if (record.data[random].item.type === "backpack") {
+        apiBackpack.push(record.data[random]);
+      }
+      if (record.data[random].item.type === "pickaxe") {
+        apiWapons.push(record.data[random]);
+      }
     }
+    res.render("fortniteChar", {
+      character: findFavoriet,
+      avatarBackpack: apiBackpack,
+      avatarPickaxe: apiWapons
+    });
+  } catch (e) {
+    console.error(e);
+    res.render("error");
+  } finally {
+    client.close();
   }
-  res.render("fortniteChar", {
-    character: favoriteImage,
-    apiImage: apiImage,
-    avatarBackpack: apiBackpack,
-    avatarPickaxe: apiWapons,
-    info: apiImages
-  });
 });
 app.post('/blacklist', (req, res) => {
   const { id, blacklistReason, image } = req.body;
-  const imageObj = apiImages[id];
-  if (imageObj) {
-    blacklist.unshift({ name: imageObj.name, images: image, blacklistReason });
+  const blacklistObj = apiImages[id];
+  if (blacklistObj) {
+    blacklist.unshift({ name: blacklistObj.name, images: image, blacklistReason });
   }
   res.redirect('fortniteHome');
 });
@@ -187,6 +204,14 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   let info = req.body;
   res.render('logingInfo', { info: info });
+});
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+  res.redirect('/login');
 });
 app.listen(app.get("port"), async () => {
   console.log(`The application has started on: http://localhost:${app.get("port")}`);

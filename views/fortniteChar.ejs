@@ -23,7 +23,7 @@
       <li class="browser"><a href="/">Landing Page</a></li>
       <li class="ipad"><a href="/">&#8592;</a></li>
       <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet-images">Favorieten</a></li>
+      <li><a href="/favoriet">Favorieten</a></li>
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
@@ -35,22 +35,22 @@
     <br>
     <section class="proberen">
       <section class="avatarInfoFav">
-        <img src="<%= character.image %>" class="profile__image" />
+        <img src="<%= character.images %>" class="profile__image" />
         <div class="profile__details">
           <div class="infoAvatars">
-            <% if(apiImage.description){ %>
+            <% if(character.description){ %>
               <p><span>description:</span>
-                <%= apiImage.description %>
+                <%= character.description %>
               </p>
               <% } %>
-                <% if(apiImage.type){ %>
+                <% if(character.type){ %>
                   <p><span>Type:</span>
-                    <%= apiImage.type %>
+                    <%= character.type %>
                   </p>
                   <% } %>
-                    <% if(apiImage.rarity){ %>
-                      <p><span>Rarrity:</span>
-                        <%= apiImage.rarity %>
+                    <% if(character.rarity){ %>
+                      <p><span>Rarity:</span>
+                        <%= character.rarity %>
                       </p>
                       <% } %>
           </div>
