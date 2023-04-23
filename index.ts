@@ -18,7 +18,7 @@ interface Avatar {
   rarity: string;
   series: string;
   images: {
-    icon: string;
+    featured: string;
   };
 }
 let apiImages: any = [];
@@ -63,14 +63,14 @@ app.get('/fortnitehome', async (req, res) => {
     for (let i = 0; i < record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
       const item = record.data[random].item;
-      if (item.type === 'outfit') {
+      if (item.type === 'outfit' && item.images.featured) {
         const avatar = {
           name: record.data[random].item.name,
           description: record.data[random].item.description,
           type: record.data[random].item.type,
           rarity: record.data[random].item.rarity,
           series: record.data[random].item.series,
-          images: record.data[random].item.images.icon,
+          images: record.data[random].item.images.featured,
           favoriet: false,
         };
         avatars.push(avatar);
@@ -233,7 +233,6 @@ app.post('/login', (req, res) => {
 app.get('/register', (req, res) => {
   res.render('register');
 });
-
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
   res.redirect('/login');

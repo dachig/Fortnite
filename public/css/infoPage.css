@@ -39,11 +39,6 @@ ul li:not(nav ul li) {
   justify-content: space-evenly;
 }
 
-.avatarInfoFav img {
-  background: linear-gradient(to right, #4364f7, #6fb1fc);
-  border-radius: 10px;
-}
-
 .infoAvatars p {
   color: #6fb1fc;
   text-transform: uppercase;

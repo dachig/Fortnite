@@ -33,7 +33,6 @@ body {
 .blacklistLayout ul {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 .blacklistLayout li {
