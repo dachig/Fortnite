@@ -17,9 +17,12 @@
 
 <body>
 
-  
   <section class="avatarPic">
-    <img src="../images/vraagteken.png" />
+    <% if (avatarDb) { %>
+      <img src="<%= avatarDb %>" />
+    <% } else { %>
+      <img src="../images/vraagteken.png" />
+    <% } %>
   </section>
   <nav>
     <ul>
@@ -31,97 +34,97 @@
       <li><a href="/login">Login</a></li>
     </ul>
   </nav>
-    <section class="title">
-      <p>Prepare yourself for battle by choosing one of these avatars!</p>
-    </section>
+  <section class="title">
+    <p>Prepare yourself for battle by choosing one of these avatars!</p>
+  </section>
 
-    <section class="mainBodyHome">
-      <% for (let i=0; i < 4; i++) { %>
-        <div class="flip-card" tabIndex="0">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= avatarImage[i].images %>" />
+  <section class="mainBodyHome">
+    <% for (let i=0; i < 4; i++) { %>
+      <div class="flip-card" tabIndex="0">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="<%= avatarImage[i].images %>" />
+          </div>
+          <div class="flip-card-back">
+            <h3 class="name">
+              <span>
+                <%= avatarImage[i].name %>
+              </span>
+            </h3>
+            <ul name="avatarInformatieDB">
+              <li>
+                <%= avatarImage[i].description %>
+              </li>
+              <li>
+                <%= avatarImage[i].type %>
+              </li>
+              <li>
+                <%= avatarImage[i].rarity %>
+              </li>
+              <li>
+                <%= avatarImage[i].series %>
+              </li>
+              <% if (avatarImage[i].favoriet) { %>
+                <img src="../images/ster.jpg" />
+                <% } %>
+            </ul>
+          </div>
+        </div>
+        <section class="choiceIndex">
+          <form action="/avatar" method="post" name="avatar">
+            <input type="hidden" name="id" value="<%= i %>">
+            <input type="hidden" name="avatarImage" value="<%= avatarImage[i].images %>">
+            <button class="choiceIndexButton1" type="submit">Avatar</button>
+          </form>
+          <form action="/favoriet" method="post">
+            <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
+            <input type="hidden" name="image" value="<%= avatarImage[i].images %>">
+            <input type="hidden" name="id" value="<%= avatarImage[i].i %>">
+            <button class="choiceIndexButton2" type="submit">Favourite</button>
+          </form>
+          <div class="modal" data-modal-target="#modal<%= i %>">
+            <div class="modal-header">
             </div>
-            <div class="flip-card-back">
-              <h3 class="name">
-                <span>
-                  <%= avatarImage[i].name %>
-                </span>
-              </h3>
-              <ul name="avatarInformatieDB">
-                <li>
-                  <%= avatarImage[i].description %>
-                </li>
-                <li>
-                  <%= avatarImage[i].type %>
-                </li>
-                <li>
-                  <%= avatarImage[i].rarity %>
-                </li>
-                <li>
-                  <%= avatarImage[i].series %>
-                </li>
-                <div class="sterItem">
-                  <% if (ster){%>
-                    <img src="../images/ster.jpg" />
-                    <%} %>
-                </div>
-              </ul>
+            <div class="modal-body">
+              <form method="post" action="/blacklist">
+                <input type="hidden" name="id" value="<%= i %>" />
+                <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
+                <button class="choiceIndexButton3" type="button" onclick="toggleTextarea(<%= i %>)">Blacklist</button>
+                <textarea id="blacklistReason<%= i %>" name="blacklistReason" placeholder="Reason for blacklisting"
+                  style="display:none;"></textarea>
+                <button id="submitButton<%= i %>" class="choiceIndexButton3" type="submit"
+                  style="display:none;">Submit</button>
+
+              </form>
             </div>
           </div>
-          <section class="choiceIndex">
-            <form action="/avatar" method="post">
-              <input type="hidden" name="id" value="<%= i %>">
-              <button class="choiceIndexButton1" type="submit">Avatar</button>
-            </form>
-            <form action="/favoriet" method="post">
-              <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
-              <input type="hidden" name="image" value="<%= avatarImage[i].images %>">
-              <input type="hidden" name="id" value="<%= avatarImage[i].i %>">
-              <button class="choiceIndexButton2" type="submit">Favourite</button>
-            </form>
-            <div class="modal" data-modal-target="#modal<%= i %>">
-              <div class="modal-header">
-              </div>
-              <div class="modal-body">
-                <form method="post" action="/blacklist">
-                  <input type="hidden" name="id" value="<%= i %>" />
-                  <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
-                  <button class="choiceIndexButton3" type="button" onclick="toggleTextarea(<%= i %>)">Blacklist</button>
-                  <textarea id="blacklistReason<%= i %>" name="blacklistReason" placeholder="Reason for blacklisting"
-                    style="display:none;"></textarea>
-                  <button id="submitButton<%= i %>" class="choiceIndexButton3" type="submit"
-                    style="display:none;">Submit</button>
+        </section>
 
-                </form>
-              </div>
-            </div>
-          </section>
-
-        </div>
-        <% } %>
+      </div>
+      <% } %>
+  </section>
+  <script>
+    // JavaScript
+    const toggleTextarea = (i) => {
+      const textarea = document.getElementById(`blacklistReason${i}`);
+      const submitButton = document.getElementById(`submitButton${i}`);
+      if (textarea.style.display === 'none') {
+        textarea.style.display = 'block';
+        submitButton.style.display = 'block';
+      } else {
+        textarea.style.display = 'none';
+        submitButton.style.display = 'none';
+      }
+    };
+  </script>
+  <footer>
+    <section>
+      <h2>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h2>
     </section>
-    <script>
-      // JavaScript
-      const toggleTextarea = (i) => {
-        const textarea = document.getElementById(`blacklistReason${i}`);
-        const submitButton = document.getElementById(`submitButton${i}`);
-        if (textarea.style.display === 'none') {
-          textarea.style.display = 'block';
-          submitButton.style.display = 'block';
-        } else {
-          textarea.style.display = 'none';
-          submitButton.style.display = 'none';
-        }
-      };
-    </script>
-<footer>
-  <section>
-    <h2>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h2>
-  </section>
-  <section>
+    <section>
       <img src="../images/ap.png">
-  </section>
-</footer>  
+    </section>
+  </footer>
 </body>
+
 </html>

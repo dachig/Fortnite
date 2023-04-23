@@ -25,51 +25,79 @@ let apiImages: any = [];
 let apiWapons: any = [];
 let apiBackpack: any = [];
 let blacklist: any = [];
-let avatars:any[] = [];
+let avatars: any[] = [];
 app.get('/', (req, res) => {
   res.render("landingpage");
 });
-app.get('/fortniteHome', async (req, res) => {
+app.get('/avatar', async (req, res) => {
+  //Deze pad is puur gewoon voor de post form. Deze wordt pagina bestaat niet. Kijk naar de post/avatr daar redirecte we naar fortnitehome en in fortnitehome zoeke we of er in avatar collection een avatar in zit.
+});
+
+app.post('/avatar', async (req, res) => {
   try {
     await client.connect();
-    let apiCall = client.db('fortnite').collection('api');
-    let favorietCollection= client.db('fortnite').collection('favoriet');
-    let fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
-    let favorietSter=await favorietCollection.find({}).toArray();
-    let record = fortniteResponse.data;
-    avatars = [];
+    const avatarCollection = client.db('fortnite').collection('avatar');
+    const avatarImage = req.body.avatarImage;
+
+    await avatarCollection.deleteMany({}); //Hier zorgen we ervoor dat we maar 1 avatar opslaan
+    await avatarCollection.insertOne({ image: avatarImage });
+    res.redirect('/fortnitehome');
+  } catch (error) {
+    console.log(error);
+    res.render('error');
+  } finally {
+    client.close();
+  }
+});
+app.get('/fortnitehome', async (req, res) => {
+  try {
+    await client.connect();
+    const apiCall = client.db('fortnite').collection('api');
+    const avatarCollection = client.db('fortnite').collection('avatar');
+    const favorietCollection = client.db('fortnite').collection('favoriet');
+    const fortniteResponse = await axios.get('https://fortnite-api.theapinetwork.com/items/list');
+    const record = fortniteResponse.data;
+    const avatars = [];
+    const apiImages = [];
+    let outfitCount = 0;
     for (let i = 0; i < record.data.length; i++) {
-      let random = Math.floor(Math.random() * record.data.length);
-      let item = record.data[random].item;
-      if (item.type === "outfit") {
-        let avatar: Avatar = {
+      const random = Math.floor(Math.random() * record.data.length);
+      const item = record.data[random].item;
+      if (item.type === 'outfit') {
+        const avatar = {
           name: record.data[random].item.name,
           description: record.data[random].item.description,
           type: record.data[random].item.type,
           rarity: record.data[random].item.rarity,
           series: record.data[random].item.series,
-          images: record.data[random].item.images.icon
+          images: record.data[random].item.images.icon,
+          favoriet: false,
         };
         avatars.push(avatar);
         apiImages.push(avatar);
+        outfitCount++;
+
+        if (outfitCount === 4) {
+          break;
+        }
       }
     }
     for (const avatar of avatars) {
       const existingAvatar = await apiCall.findOne({ name: avatar.name });
       if (!existingAvatar) {
-        await apiCall.insertMany(avatars.slice(0, 4));
+        await apiCall.insertMany(avatars);
         break;
       }
     }
-    res.render("fortniteHome", {
+    const avatarDb = await avatarCollection.findOne({});
+    res.render('fortniteHome', {
       avatarImage: avatars,
-      ster:favorietSter
+      avatarDb: avatarDb ? avatarDb.image : null, // => deze code doet een checking als da true is of false. De true deel staat voor de :, als da nie true is is undifined of 0 => wordt vraagteken geshowed. Zonder deze krijg je rare afbeelding op je ejs file.
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
-  }
-  finally {
+    res.render('error');
+  } finally {
     client.close();
   }
 });
@@ -78,8 +106,8 @@ app.post('/favoriet', async (req, res) => {
     await client.connect();
     let favorietCollection = client.db('fortnite').collection('favoriet');
     let apiCall = client.db('fortnite').collection('api');
-    let info = req.body;
 
+    let info = req.body;
     const item = await apiCall.findOne({ name: info.name });
     if (!item) {
       return res.status(404).send('Item not found in API');
@@ -93,7 +121,6 @@ app.post('/favoriet', async (req, res) => {
       series: item.series
     };
     await favorietCollection.insertOne(favoriet);
-
     res.redirect('/fortniteHome');
   } catch (e) {
     console.error(e);
@@ -112,7 +139,7 @@ app.get('/favoriet', async (req, res) => {
     const record = fortniteResponse.data;
     let apiBackpack = [];
     let apiWapons = [];
-    for (let i = 0; i <= record.data.length; i++) {
+    for (let i = 0; i < record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
       if (record.data[random].item.type === "backpack") {
         apiBackpack.push(record.data[random]);
@@ -134,22 +161,21 @@ app.get('/favoriet', async (req, res) => {
     client.close();
   }
 });
-
 app.get("/favoriet/:id", async (req, res) => {
   try {
     await client.connect();
     let favorietCollection = await client.db('fortnite').collection('favoriet');
     let backpackCollection = await client.db('fortnite').collection('backpack');
     let pickaxeCollection = await client.db('fortnite').collection('backpack');
-    let id:string = req.params.id;
-    
-    let findFavoriet = await favorietCollection.findOne<Avatar>({_id:new ObjectId(id)});
-    if(!findFavoriet){
+    let id: string = req.params.id;
+
+    let findFavoriet = await favorietCollection.findOne<Avatar>({ _id: new ObjectId(id) });
+    if (!findFavoriet) {
       res.render('error');
     }
     let fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
     const record = fortniteResponse.data;
-    
+
     let apiBackpack = [];
     let apiWapons = [];
     for (let i = 0; i <= record.data.length; i++) {
@@ -175,7 +201,7 @@ app.get("/favoriet/:id", async (req, res) => {
 });
 app.post('/blacklist', (req, res) => {
   const { id, blacklistReason, image } = req.body;
-  const blacklistObj = apiImages[id];
+  const blacklistObj = avatars[id];
   if (blacklistObj) {
     blacklist.unshift({ name: blacklistObj.name, images: image, blacklistReason });
   }
@@ -195,9 +221,8 @@ app.post('/blacklist/:id', (req, res) => {
   }
 });
 app.get('/blacklist', async (req, res) => {
-  res.render('blacklist', { blacklist, apiImages });
+  res.render('blacklist', { blacklist, avatars });
 });
-
 app.get('/login', (req, res) => {
   res.render('login');
 });
