@@ -10,7 +10,8 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
 const uri = 'mongodb+srv://rachad:mojito12@cluster0.w2eqvxp.mongodb.net/test';
 const client = new MongoClient(uri);
-interface Avatar {
+//Items die worden doorgestuurd moeten een interface hebben.
+interface Avatar { //Interface voor de items die we toevoegen in api collection
   _id?: ObjectId;
   name: string;
   description: string;
@@ -21,16 +22,15 @@ interface Avatar {
     featured: string;
   };
 }
-let apiImages: any = [];
-let apiWapons: any = [];
-let apiBackpack: any = [];
-let blacklist: any = [];
-let avatars: any[] = [];
+let apiWapons: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
+let apiBackpack: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
+let avatars: any[] = [];// Deze array kan aangepast worden, zodat we gebruik maken van api collection.
 app.get('/', (req, res) => {
   res.render("landingpage");
 });
 app.get('/avatar', async (req, res) => {
   //Deze pad is puur gewoon voor de post form. Deze wordt pagina bestaat niet. Kijk naar de post/avatr daar redirecte we naar fortnitehome en in fortnitehome zoeke we of er in avatar collection een avatar in zit.
+  //Er zijn andere manieren om dit te doen, maar dit volstaat momenteel.
 });
 
 app.post('/avatar', async (req, res) => {
@@ -39,8 +39,8 @@ app.post('/avatar', async (req, res) => {
     const avatarCollection = client.db('fortnite').collection('avatar');
     const avatarImage = req.body.avatarImage;
 
-    await avatarCollection.deleteMany({}); //Hier zorgen we ervoor dat we maar 1 avatar opslaan
-    await avatarCollection.insertOne({ image: avatarImage });
+    await avatarCollection.deleteMany({}); //Hier zorgen we ervoor dat de vorige avatar verwijderd wordt.
+    await avatarCollection.insertOne({ image: avatarImage });//Hier zorgen we ervoor dat de avatar toegevoegd wordt.
     res.redirect('/fortnitehome');
   } catch (error) {
     console.log(error);
@@ -54,11 +54,10 @@ app.get('/fortnitehome', async (req, res) => {
     await client.connect();
     const apiCall = client.db('fortnite').collection('api');
     const avatarCollection = client.db('fortnite').collection('avatar');
-    const favorietCollection = client.db('fortnite').collection('favoriet');
+    const favorietCollection = client.db('fortnite').collection('favoriet');//Deze code moet nog worden verwerkt.
     const fortniteResponse = await axios.get('https://fortnite-api.theapinetwork.com/items/list');
     const record = fortniteResponse.data;
-    const avatars = [];
-    const apiImages = [];
+    const avatars = [];//array wordt terug leeggemaakt;
     let outfitCount = 0;
     for (let i = 0; i < record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
@@ -74,11 +73,10 @@ app.get('/fortnitehome', async (req, res) => {
           favoriet: false,
         };
         avatars.push(avatar);
-        apiImages.push(avatar);
-        outfitCount++;
+        outfitCount++;  // Dit zorgt ervoor dat we the hele api kunnen blijven gebruiken en dat er altijd random items zijn.
 
-        if (outfitCount === 4) {
-          break;
+        if (outfitCount === 4) { // Dit zorgt ervoor dat we maar 4 items laten zien voor de user + 4 items in api collection.
+          break; // zodat we uit de for loop kunnen. Je kan dit ook doen in for loop conditie.
         }
       }
     }
@@ -94,6 +92,7 @@ app.get('/fortnitehome', async (req, res) => {
       avatarImage: avatars,
       avatarDb: avatarDb ? avatarDb.image : null, // => deze code doet een checking als da true is of false. De true deel staat voor de :, als da nie true is is undifined of 0 => wordt vraagteken geshowed. Zonder deze krijg je rare afbeelding op je ejs file.
     });
+    
   } catch (error) {
     console.log(error);
     res.render('error');
@@ -165,8 +164,8 @@ app.get("/favoriet/:id", async (req, res) => {
   try {
     await client.connect();
     let favorietCollection = await client.db('fortnite').collection('favoriet');
-    let backpackCollection = await client.db('fortnite').collection('backpack');
-    let pickaxeCollection = await client.db('fortnite').collection('backpack');
+    let backpackCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
+    let pickaxeCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
     let id: string = req.params.id;
 
     let findFavoriet = await favorietCollection.findOne<Avatar>({ _id: new ObjectId(id) });
@@ -199,41 +198,67 @@ app.get("/favoriet/:id", async (req, res) => {
     client.close();
   }
 });
-app.post('/blacklist', (req, res) => {
-  const { id, blacklistReason, image } = req.body;
-  const blacklistObj = avatars[id];
-  if (blacklistObj) {
-    blacklist.unshift({ name: blacklistObj.name, images: image, blacklistReason });
-  }
-  res.redirect('fortniteHome');
-});
-app.post('/blacklist/:id', (req, res) => {
-  const id = req.params.id;
-  const { _method } = req.body;
-
-  if (_method === 'DELETE') {
-    blacklist.splice(id, 1);
-    res.redirect('/blacklist');
-  } else {
-    const { blacklistReason } = req.body;
-    blacklist[id].blacklistReason = blacklistReason;
-    res.redirect('/blacklist');
-  }
-});
 app.get('/blacklist', async (req, res) => {
-  res.render('blacklist', { blacklist, avatars });
+  try {
+    await client.connect();
+    const blacklistCollection = await client.db('fortnite').collection('blacklist');
+    const blacklist = await blacklistCollection.find().toArray();//Deze code displayed alle items die in blacklistCollection zitten.
+    res.render('blacklist', { blacklist});
+  } catch (e) {
+    console.error(e+'Error in blacklist collection');
+    res.render('error');
+  } finally {
+    client.close();
+  }
 });
-app.get('/login', (req, res) => {
+//Probleem bij update blacklist textarea, moet worden aangepast.
+//We kunnen een pad aanmaken zoals bij delete post => blacklist/update zodat we the reason kunnen update. Deze post naar blacklist is hetzelfde die in onze fortniteHome.ejs staat.
+app.post('/blacklist', async (req, res) => { 
+  try {
+    await client.connect();
+    // We gebruiken de api collection als basis waar de items van de homepage in zitten.
+    let blacklistCollection = await client.db('fortnite').collection('blacklist');
+    let apiCall = await client.db('fortnite').collection('api');
+
+    const { id, blacklistReason, image } = req.body;
+    const blacklistObj = await apiCall.findOne({ _id: new ObjectId(id) });//Deze code neemt de id die we doorsturen en zoekt in de api collection een id die overeenkomt.
+
+    if (blacklistObj) { // Als die id gevonden is, insert we alle gegevens van de form die we doorsturen + de image.
+      await blacklistCollection.insertOne({ name: blacklistObj.name, images: image, blacklistReason });
+    }
+    res.redirect('/fortniteHome');
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+});
+//Als je /delete achter pad => Niet vergeten dat je in je form voor post action dat ook moet vermelden.
+app.post('/blacklist/delete', async (req, res) => { //Zodat de server weet dat we delete doen.
+  try {
+    const id = req.body.id;
+    await client.connect();
+    const blacklistCollection = await client.db('fortnite').collection('blacklist');
+    await blacklistCollection.deleteOne({ _id: new ObjectId(id) }); //Item delete met zelfde id.
+    res.redirect('/blacklist');
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/login', (req, res) => {//Dit moet nog worden verwerkt
   res.render('login');
 });
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) => {//Dit moet nog worden verwerkt
   let info = req.body;
   res.render('logingInfo', { info: info });
 });
-app.get('/register', (req, res) => {
+app.get('/register', (req, res) => {//Dit moet nog worden verwerkt
   res.render('register');
 });
-app.post('/register', (req, res) => {
+app.post('/register', (req, res) => {//Dit moet nog worden verwerkt
   const { username, password } = req.body;
   res.redirect('/login');
 });

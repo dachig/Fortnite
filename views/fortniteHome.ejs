@@ -87,14 +87,12 @@
             </div>
             <div class="modal-body">
               <form method="post" action="/blacklist">
-                <input type="hidden" name="id" value="<%= i %>" />
+                <input type="hidden" name="id" value="<%= avatarImage[i]._id %>" />
+                <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
                 <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
-                <button class="choiceIndexButton3" type="button" onclick="toggleTextarea(<%= i %>)">Blacklist</button>
-                <textarea id="blacklistReason<%= i %>" name="blacklistReason" placeholder="Reason for blacklisting"
-                  style="display:none;"></textarea>
-                <button id="submitButton<%= i %>" class="choiceIndexButton3" type="submit"
-                  style="display:none;">Submit</button>
-
+                <button class="choiceIndexButton3" type="button" onclick="toggleTextarea('<%= avatarImage[i]._id %>')">Blacklist</button>
+                <textarea id="blacklistReason<%= avatarImage[i]._id %>" name="blacklistReason" placeholder="Reason for blacklisting" style="display:none;"></textarea>
+                <button id="submitButton<%= avatarImage[i]._id %>" class="choiceIndexButton3" type="submit" style="display:none;">Submit</button>
               </form>
             </div>
           </div>
@@ -104,10 +102,9 @@
       <% } %>
   </section>
   <script>
-    // JavaScript
-    const toggleTextarea = (i) => {
-      const textarea = document.getElementById(`blacklistReason${i}`);
-      const submitButton = document.getElementById(`submitButton${i}`);
+    const toggleTextarea = (id) => {
+      const textarea = document.getElementById(`blacklistReason${id}`);
+      const submitButton = document.getElementById(`submitButton${id}`);
       if (textarea.style.display === 'none') {
         textarea.style.display = 'block';
         submitButton.style.display = 'block';
