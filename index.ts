@@ -86,7 +86,7 @@ app.get('/fortnitehome', async (req, res) => {
     const avatarDb = await avatarCollection.findOne({});
     res.render('fortniteHome', {
       avatarImage: avatars,
-      avatarDb: avatarDb ? avatarDb.image : null, // => deze code doet een checking als da true is of false. De true deel staat voor de :, als da nie true is is undifined of 0 => wordt vraagteken geshowed. Zonder deze krijg je rare afbeelding op je ejs file.
+      avatarDb: avatarDb ? avatarDb.image : null // => deze code doet een checking als da true is of false. De true deel staat voor de :, als da nie true is is undifined of 0 => wordt vraagteken geshowed. Zonder deze krijg je rare afbeelding op je ejs file.
     });
     
   } catch (error) {
@@ -129,9 +129,9 @@ app.post('/favoriet', async (req, res) => {
 app.get('/favoriet', async (req, res) => {
   try {
     await client.connect();
+    const avatarCollection = client.db('fortnite').collection('avatar');
     let favorietCollection = await client.db('fortnite').collection('favoriet');
     let favorieten = await favorietCollection.find({}).toArray();
-
     const fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
     const record = fortniteResponse.data;
     let apiBackpack = [];
@@ -145,10 +145,12 @@ app.get('/favoriet', async (req, res) => {
         apiWapons.push(record.data[random]);
       }
     }
+    const avatarDb = await avatarCollection.findOne({});
     res.render('favoriet', {
       favoriteImages: favorieten,
       apiWapons: apiWapons,
-      apiBackpack: apiBackpack
+      apiBackpack: apiBackpack,
+      avatarDb: avatarDb ? avatarDb.image : null
     });
 
   } catch (e) {
@@ -162,6 +164,7 @@ app.get("/favoriet/:id", async (req, res) => {
   try {
     await client.connect();
     let favorietCollection = await client.db('fortnite').collection('favoriet');
+    const avatarCollection = client.db('fortnite').collection('avatar');
     let backpackCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
     let pickaxeCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
     let id: string = req.params.id;
@@ -184,10 +187,12 @@ app.get("/favoriet/:id", async (req, res) => {
         apiWapons.push(record.data[random]);
       }
     }
+    const avatarDb = await avatarCollection.findOne({});
     res.render("fortniteChar", {
       character: findFavoriet,
       avatarBackpack: apiBackpack,
-      avatarPickaxe: apiWapons
+      avatarPickaxe: apiWapons,
+      avatarDb: avatarDb ? avatarDb.image : null
     });
   } catch (e) {
     console.error(e);
@@ -199,9 +204,11 @@ app.get("/favoriet/:id", async (req, res) => {
 app.get('/blacklist', async (req, res) => {
   try {
     await client.connect();
+    const avatarCollection = client.db('fortnite').collection('avatar');
     const blacklistCollection = await client.db('fortnite').collection('blacklist');
     const blacklist = await blacklistCollection.find().toArray();//Deze code displayed alle items die in blacklistCollection zitten.
-    res.render('blacklist', { blacklist});
+    const avatarDb = await avatarCollection.findOne({});
+    res.render('blacklist', { blacklist,avatarDb: avatarDb ? avatarDb.image : null});
   } catch (e) {
     console.error(e+'Error in blacklist collection');
     res.render('error');

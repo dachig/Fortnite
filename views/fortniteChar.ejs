@@ -16,7 +16,11 @@
 <body>
 
   <section class="avatarPic">
-    <img src="../images/vraagteken.png" />
+    <% if (avatarDb) { %>
+      <img src="<%= avatarDb %>" />
+    <% } else { %>
+      <img src="../images/vraagteken.png" />
+    <% } %>
   </section>
   <nav>
     <ul>
