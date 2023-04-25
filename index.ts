@@ -21,6 +21,7 @@ interface Avatar { //Interface voor de items die we toevoegen in api collection
   images: {
     featured: string;
   };
+  favoriet: boolean,
 }
 let apiWapons: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
 let apiBackpack: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
@@ -59,7 +60,7 @@ app.get('/fortnitehome', async (req, res) => {
       const random = Math.floor(Math.random() * record.data.length);
       const item = record.data[random].item;
       if (item.type === 'outfit' && item.images.featured) {
-        const avatar = {
+        const avatar:Avatar = {
           name: record.data[random].item.name,
           description: record.data[random].item.description,
           type: record.data[random].item.type,
@@ -79,8 +80,7 @@ app.get('/fortnitehome', async (req, res) => {
     for (const avatar of avatars) {
       const existingAvatar = await apiCall.findOne({ name: avatar.name });
       if (!existingAvatar) {
-        await apiCall.insertMany(avatars);
-        break;
+        await apiCall.insertOne(avatar); //Zorgt ervoor dat wanneer er geen obj(existingAvatar) in the api collection zit, dat we 1 voor 1 dat doen.
       }
     }
     const avatarDb = await avatarCollection.findOne({});
@@ -105,7 +105,9 @@ app.post('/favoriet', async (req, res) => {
     let info = req.body;
     const item = await apiCall.findOne({ name: info.name });
     if (!item) {
-      return res.status(404).send('Item not found in API');
+      console.log('Item niet gevonden in favoriet');
+      res.render('error');
+      return;;
     }
     const favoriet = {
       name: item.name,
@@ -225,6 +227,7 @@ app.post('/blacklist', async (req, res) => {
     res.redirect('/fortniteHome');
   } catch (e) {
     console.error(e);
+    res.render('error');
   } finally {
     await client.close();
   }
