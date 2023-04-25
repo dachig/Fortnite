@@ -60,7 +60,7 @@ app.get('/fortnitehome', async (req, res) => {
       const random = Math.floor(Math.random() * record.data.length);
       const item = record.data[random].item;
       if (item.type === 'outfit' && item.images.featured) {
-        const avatar:Avatar = {
+        const avatar: Avatar = {
           name: record.data[random].item.name,
           description: record.data[random].item.description,
           type: record.data[random].item.type,
@@ -88,7 +88,7 @@ app.get('/fortnitehome', async (req, res) => {
       avatarImage: avatars,
       avatarDb: avatarDb ? avatarDb.image : null // => deze code doet een checking als da true is of false. De true deel staat voor de :, als da nie true is is undifined of 0 => wordt vraagteken geshowed. Zonder deze krijg je rare afbeelding op je ejs file.
     });
-    
+
   } catch (error) {
     console.log(error);
     res.render('error');
@@ -130,34 +130,46 @@ app.get('/favoriet', async (req, res) => {
   try {
     await client.connect();
     const avatarCollection = client.db('fortnite').collection('avatar');
-    let favorietCollection = await client.db('fortnite').collection('favoriet');
-    let favorieten = await favorietCollection.find({}).toArray();
-    const fortniteResponse = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
-    const record = fortniteResponse.data;
-    let apiBackpack = [];
-    let apiWapons = [];
-    for (let i = 0; i < record.data.length; i++) {
-      const random = Math.floor(Math.random() * record.data.length);
-      if (record.data[random].item.type === "backpack") {
-        apiBackpack.push(record.data[random]);
-      }
-      if (record.data[random].item.type === "pickaxe") {
-        apiWapons.push(record.data[random]);
-      }
-    }
-    const avatarDb = await avatarCollection.findOne({});
+    const favorietCollection = await client.db('fortnite').collection('favoriet');
+    const favorieten = await favorietCollection.find({}).toArray();
+    const backpackCollection = await client.db('fortnite').collection('backpack');
+    const pickaxeCollection = await client.db('fortnite').collection('pickaxe');
+    const backpack = await backpackCollection.find({}).toArray();
+    const pickaxe = await pickaxeCollection.find({}).toArray();
+    const avatarDb = await avatarCollection.findOne();
+
     res.render('favoriet', {
       favoriteImages: favorieten,
-      apiWapons: apiWapons,
-      apiBackpack: apiBackpack,
+      pickaxe: pickaxe,
+      backpack: backpack,
       avatarDb: avatarDb ? avatarDb.image : null
     });
 
   } catch (e) {
     res.render('error');
-
   } finally {
     client.close();
+  }
+});
+
+app.post('/favoriet/:id/update', async (req, res) => {
+  try {
+    await client.connect();
+    let backpackCollection = await client.db('fortnite').collection('backpack');
+    let pickaxeCollection = await client.db('fortnite').collection('pickaxe');
+
+    let { id, backpack, pickaxe } = req.body;
+    await backpackCollection.deleteOne({ name: id });
+    await pickaxeCollection.deleteOne({ name: id });
+
+    await backpackCollection.insertOne({ name: req.params.id, backpack: backpack });
+    await pickaxeCollection.insertOne({ name: req.params.id, pickaxe: pickaxe });
+    res.redirect('/favoriet');
+  } catch (e) {
+    res.render('error');
+  }
+  finally {
+    await client.close();
   }
 });
 app.get("/favoriet/:id", async (req, res) => {
@@ -165,8 +177,6 @@ app.get("/favoriet/:id", async (req, res) => {
     await client.connect();
     let favorietCollection = await client.db('fortnite').collection('favoriet');
     const avatarCollection = client.db('fortnite').collection('avatar');
-    let backpackCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
-    let pickaxeCollection = await client.db('fortnite').collection('backpack');//Dit moet nog worden verwerkt
     let id: string = req.params.id;
 
     let findFavoriet = await favorietCollection.findOne<Avatar>({ _id: new ObjectId(id) });
@@ -208,9 +218,9 @@ app.get('/blacklist', async (req, res) => {
     const blacklistCollection = await client.db('fortnite').collection('blacklist');
     const blacklist = await blacklistCollection.find().toArray();//Deze code displayed alle items die in blacklistCollection zitten.
     const avatarDb = await avatarCollection.findOne({});
-    res.render('blacklist', { blacklist,avatarDb: avatarDb ? avatarDb.image : null});
+    res.render('blacklist', { blacklist, avatarDb: avatarDb ? avatarDb.image : null });
   } catch (e) {
-    console.error(e+'Error in blacklist collection');
+    console.error(e + 'Error in blacklist collection');
     res.render('error');
   } finally {
     client.close();
@@ -218,7 +228,7 @@ app.get('/blacklist', async (req, res) => {
 });
 //Probleem bij update blacklist textarea, moet worden aangepast.
 //We kunnen een pad aanmaken zoals bij delete post => blacklist/update zodat we the reason kunnen update. Deze post naar blacklist is hetzelfde die in onze fortniteHome.ejs staat.
-app.post('/blacklist', async (req, res) => { 
+app.post('/blacklist', async (req, res) => {
   try {
     await client.connect();
     // We gebruiken de api collection als basis waar de items van de homepage in zitten.
@@ -240,21 +250,21 @@ app.post('/blacklist', async (req, res) => {
   }
 });
 //Reden voor niet-werking:In the form gebruikte ik gewoon hidden input id, na verschillende inputs te gebruiken => Heb ik gewoon dezelfde hidden inputs gebruikt die staan in form op homepage. Zie blacklist.ejs en homepage forms
-app.post('/blacklist/update', async (req, res) => {  
+app.post('/blacklist/update', async (req, res) => {
   try {
     await client.connect();
     const blacklistCollection = await client.db('fortnite').collection('blacklist');
 
     const { id, blacklistReason, name } = req.body;
-    const blacklistObj = await blacklistCollection.findOne({ _id: new ObjectId(id), name: name }); 
+    const blacklistObj = await blacklistCollection.findOne({ _id: new ObjectId(id), name: name });
 
-    if (blacklistObj) { 
+    if (blacklistObj) {
       console.log('Oude reason:', blacklistObj.blacklistReason); //Dit is puur controle of the code werkt
       await blacklistCollection.updateOne(
         { _id: new ObjectId(id), name: name }, //Zoekt dezelfde id en name
         { $set: { blacklistReason: blacklistReason } }// en set => update, verandert de reason met de nieuwe reason.
       );
-      console.log('Nieuw reason: ',blacklistReason);//Dit is puur controle of the code werkt
+      console.log('Nieuw reason: ', blacklistReason);//Dit is puur controle of the code werkt
     }
     res.redirect('/blacklist');
   } catch (e) {

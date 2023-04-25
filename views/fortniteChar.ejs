@@ -59,7 +59,7 @@
                       <% } %>
           </div>
           <div class="infoForm">
-            <form action="/action_page.php">
+            <form action="/favoriet/:id/update">
               <label for="wins" class="textForm"><i id="thumbs-up" class="fa fa-thumbs-up"></i></label>
               <input type="number" id="quantity" name="quantity" min="0" max="5" placeholder="0">
               <label for="loses" class="textForm"><i id="thumbs-down" class="fa fa-thumbs-down"></i></label>
@@ -79,7 +79,8 @@
     <h1 class="itemTitle">Shop</h1>
     <br>
     <div class="charTabel">
-      <form action="/testing" method="post">
+      <form action="/favoriet/<%= character.name %>/update" method="post">
+        <input type="hidden" name="id" value="<%=character.name%>">
         <section class="testing">
           <% for(let i=0; i<4;i++){ %>
             <div class="charSolo">
@@ -87,14 +88,14 @@
                 <h2 class="itemTitleh2">
                   <%= avatarBackpack[i].item.name %>
                 </h2>
-                <input type="radio" name="backpack" value="backpack">
+                <input type="radio" name="backpack" value="<%= avatarBackpack[i].item.images.icon %>">
               </div>
               <label for="backpack" name="<%=i%>"><img src="<%= avatarBackpack[i].item.images.icon %>" /></label> <br>
               <div class="TitleInputForm">
                 <h2 class="itemTitleh2">
                   <%= avatarBackpack[i].item.name %>
                 </h2>
-                <input type="radio" name="pickaxe" value="backpack">
+                <input type="radio" name="pickaxe" value="<%= avatarPickaxe[i].item.images.icon %>">
               </div>
               <label for="pickaxe" name="<%=i%>"><img src="<%= avatarPickaxe[i].item.images.icon %>" /></label>
             </div>

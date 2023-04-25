@@ -13,14 +13,15 @@
 
   <title>Document</title>
 </head>
+
 <body>
-  
+
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
-    <% } else { %>
-      <img src="../images/vraagteken.png" />
-    <% } %>
+      <% } else { %>
+        <img src="../images/vraagteken.png" />
+        <% } %>
   </section>
   <nav>
     <ul>
@@ -31,34 +32,50 @@
       <li><a href="/blacklist">Blacklists</a></li>
       <li><a href="/login">Login</a></li>
     </ul>
-  </nav>  
+  </nav>
   <div class="charTabel">
     <section class="testing">
-      <% for (let i = 0; i < favoriteImages.length; i++) { %>
+      <% for (let i=0; i < favoriteImages.length; i++) { %>
         <div class="charSolo">
-        <h1>
-          <a href="/favoriet/<%=favoriteImages[i]._id%>"><%= favoriteImages[i].name %></a>
-        </h1>
-        <section class="articleAvatar">
-          <img src="<%= favoriteImages[i].images %>">
-          <% if (i < apiBackpack.length) { %>
-            <img src="<%= apiBackpack[i].item.images.icon %>" />
-          <% } %>
-          <% if (i < apiWapons.length) { %>
-            <img src="<%= apiWapons[i].item.images.icon %>" />
-          <% } %>
-        </section>
-      </div>
-      <% } %>
+          <h1>
+            <a href="/favoriet/<%= favoriteImages[i]._id %>">
+              <%= favoriteImages[i].name %>
+            </a>
+          </h1>
+          <section class="articleAvatar">
+            <img src="<%= favoriteImages[i].images %>">
+            <% let backpackFound=false; %>
+              <% for (let j=0; j < backpack.length; j++) { %>
+                <% if (favoriteImages[i].name===backpack[j].name && backpack[j].backpack) { %>
+                  <% backpackFound=true; %>
+                    <img src="<%= backpack[j].backpack %>" />
+                    <% } %>
+                      <% } %>
+                        <% if (!backpackFound) { %>
+                          <img class="questionmarkFavoriet" src="../images/vraagteken.png" />
+                          <% } %>
+                            <% let pickaxeFound=false; %>
+                              <% for (let k=0; k < pickaxe.length; k++) { %>
+                                <% if (favoriteImages[i].name===pickaxe[k].name && pickaxe[k].pickaxe) { %>
+                                  <% pickaxeFound=true; %>
+                                    <img src="<%= pickaxe[k].pickaxe %>" />
+                                    <% } %>
+                                      <% } %>
+                                        <% if (!pickaxeFound) { %>
+                                          <img class="questionmarkFavoriet" src="../images/vraagteken.png" />
+                                          <% } %>
+          </section>
+        </div>
+        <% } %>
     </section>
-    </div>
-    <footer>
-      <section>
-        <h2>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h2>
-      </section>
-      <section>
-          <img src="../images/ap.png">
-      </section>
+  </div>
+  <footer>
+    <section>
+      <h2>Copyright &copy;MSI - Ramazan Sofyan Dachi Rachad</h2>
+    </section>
+    <section>
+      <img src="../images/ap.png">
+    </section>
   </footer>
 </body>
 
