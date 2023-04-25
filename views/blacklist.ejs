@@ -38,23 +38,21 @@
           <br>
           <img src="<%= blacklist[i].images %>">
           <br><br>
-          <p class="blacklistReason">Reason</p>
           <div class="buttonblacklist">
-            <form method="post" action="/blacklist">
-              <input type="hidden" name="id" value="<%= blacklist[i]._id %>">
+            <form method="post" action="/blacklist/update">
+              <input type="hidden" name="id" value="<%= blacklist[i]._id %>" />
+                <input type="hidden" name="name" value="<%= blacklist[i].name %>">
+                <input type="hidden" name="image" value="<%= blacklist[i].images %> %>" />
               <textarea rows="4" name="blacklistReason"><%= blacklist[i].blacklistReason %></textarea>
-              <br>
-              <input type="hidden" name="_method" value="UPDATE">
               <button type="submit">Save</button>
             </form>
             <form method="post" action="/blacklist/delete">
               <input type="hidden" name="id" value="<%= blacklist[i]._id %>">
-              <input type="hidden" name="_method" value="DELETE">
               <button type="submit">Delete</button>
             </form>
           </div>
         </li>
-        <% } %>
+      <% } %>
     </ul>
   </section>
   <footer>

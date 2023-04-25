@@ -28,12 +28,8 @@ let avatars: any[] = [];// Deze array kan aangepast worden, zodat we gebruik mak
 app.get('/', (req, res) => {
   res.render("landingpage");
 });
-app.get('/avatar', async (req, res) => {
-  //Deze pad is puur gewoon voor de post form. Deze wordt pagina bestaat niet. Kijk naar de post/avatr daar redirecte we naar fortnitehome en in fortnitehome zoeke we of er in avatar collection een avatar in zit.
-  //Er zijn andere manieren om dit te doen, maar dit volstaat momenteel.
-});
 
-app.post('/avatar', async (req, res) => {
+app.post('/fortnitehome/avatar', async (req, res) => {
   try {
     await client.connect();
     const avatarCollection = client.db('fortnite').collection('avatar');
@@ -227,6 +223,30 @@ app.post('/blacklist', async (req, res) => {
       await blacklistCollection.insertOne({ name: blacklistObj.name, images: image, blacklistReason });
     }
     res.redirect('/fortniteHome');
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+});
+//Reden voor niet-werking:In the form gebruikte ik gewoon hidden input id, na verschillende inputs te gebruiken => Heb ik gewoon dezelfde hidden inputs gebruikt die staan in form op homepage. Zie blacklist.ejs en homepage forms
+app.post('/blacklist/update', async (req, res) => {  
+  try {
+    await client.connect();
+    const blacklistCollection = await client.db('fortnite').collection('blacklist');
+
+    const { id, blacklistReason, name } = req.body;
+    const blacklistObj = await blacklistCollection.findOne({ _id: new ObjectId(id), name: name }); 
+
+    if (blacklistObj) { 
+      console.log('Oude reason:', blacklistObj.blacklistReason); //Dit is puur controle of the code werkt
+      await blacklistCollection.updateOne(
+        { _id: new ObjectId(id), name: name }, //Zoekt dezelfde id en name
+        { $set: { blacklistReason: blacklistReason } }// en set => update, verandert de reason met de nieuwe reason.
+      );
+      console.log('Nieuw reason: ',blacklistReason);//Dit is puur controle of the code werkt
+    }
+    res.redirect('/blacklist');
   } catch (e) {
     console.error(e);
   } finally {
