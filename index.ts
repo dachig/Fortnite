@@ -59,7 +59,7 @@ app.get('/fortnitehome', async (req, res) => {
     for (let i = 0; i < record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
       const item = record.data[random].item;
-      if (item.type === 'outfit' && item.images.featured) {
+      if (item.type === 'outfit' && item.images.featured) { //Niet alle items hebben feauter in api data.
         const avatar: Avatar = {
           name: record.data[random].item.name,
           description: record.data[random].item.description,
@@ -302,6 +302,8 @@ app.post('/register', (req, res) => {//Dit moet nog worden verwerkt
   const { username, password } = req.body;
   res.redirect('/login');
 });
+
+
 app.listen(app.get("port"), async () => {
   console.log(`The application has started on: http://localhost:${app.get("port")}`);
 });

@@ -19,9 +19,9 @@
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
-    <% } else { %>
-      <img src="../images/vraagteken.png" />
-    <% } %>
+      <% } else { %>
+        <img src="../images/vraagteken.png" />
+        <% } %>
   </section>
   <nav>
     <ul>
@@ -37,7 +37,8 @@
     <ul>
       <% for (let i=0; i < blacklist.length; i++) { %>
         <li>
-          <p class="charName"><%= blacklist[i].name %>
+          <p class="charName">
+            <%= blacklist[i].name %>
           </p>
           <br>
           <img src="<%= blacklist[i].images %>">
@@ -45,8 +46,8 @@
           <div class="buttonblacklist">
             <form method="post" action="/blacklist/update">
               <input type="hidden" name="id" value="<%= blacklist[i]._id %>" />
-                <input type="hidden" name="name" value="<%= blacklist[i].name %>">
-                <input type="hidden" name="image" value="<%= blacklist[i].images %> %>" />
+              <input type="hidden" name="name" value="<%= blacklist[i].name %>">
+              <input type="hidden" name="image" value="<%= blacklist[i].images %> %>" />
               <textarea rows="4" name="blacklistReason"><%= blacklist[i].blacklistReason %></textarea>
               <button type="submit">Save</button>
             </form>
@@ -56,7 +57,7 @@
             </form>
           </div>
         </li>
-      <% } %>
+        <% } %>
     </ul>
   </section>
   <footer>

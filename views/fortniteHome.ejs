@@ -20,9 +20,9 @@
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
-    <% } else { %>
-      <img src="../images/vraagteken.png" />
-    <% } %>
+      <% } else { %>
+        <img src="../images/vraagteken.png" />
+        <% } %>
   </section>
   <nav>
     <ul>
@@ -90,9 +90,12 @@
                 <input type="hidden" name="id" value="<%= avatarImage[i]._id %>" />
                 <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
                 <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
-                <button class="choiceIndexButton3" type="button" onclick="toggleTextarea('<%= avatarImage[i]._id %>')">Blacklist</button>
-                <textarea id="blacklistReason<%= avatarImage[i]._id %>" name="blacklistReason" placeholder="Reason for blacklisting" style="display:none;"></textarea>
-                <button id="submitButton<%= avatarImage[i]._id %>" class="choiceIndexButton3" type="submit" style="display:none;">Submit</button>
+                <button class="choiceIndexButton3" type="button"
+                  onclick="toggleTextarea('<%= avatarImage[i]._id %>')">Blacklist</button>
+                <textarea id="blacklistReason<%= avatarImage[i]._id %>" name="blacklistReason"
+                  placeholder="Reason for blacklisting" style="display:none;"></textarea>
+                <button id="submitButton<%= avatarImage[i]._id %>" class="choiceIndexButton3" type="submit"
+                  style="display:none;">Submit</button>
               </form>
             </div>
           </div>
