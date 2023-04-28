@@ -25,12 +25,16 @@
   </section>
   <nav>
     <ul>
-      <li class="browser"><a href="/">Landing Page</a></li>
-      <li class="ipad"><a href="/">&#8592;</a></li>
-      <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet">Favorieten</a></li>
-      <li><a href="/blacklist">Blacklists</a></li>
-      <li><a href="/login">Login</a></li>
+      <% if (username) { %>
+        <li class="browser"><a href="/">Landing Page</a></li>
+        <li class="ipad"><a href="/">&#8592;</a></li>
+        <li><a href="/fortniteHome">Home</a></li>
+        <li><a href="/favoriet">Favorieten</a></li>
+        <li><a href="/blacklist">Blacklists</a></li>
+        <li><a href="/logout">logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <% } %>
     </ul>
   </nav>
   <div class="charTabel">
