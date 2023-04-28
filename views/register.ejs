@@ -19,15 +19,14 @@
   </section>
   <nav>
     <ul>
-          <li><a href="/register">Register</a></li>
+      <li class="browser"><a href="/">Landing Page</a></li>
+      <li class="ipad"><a href="/">&#8592;</a></li>
+      <li><a href="/login">Login</a></li>
     </ul>
   </nav>
-  <% if(locals.message) { %>
-    <h1><%=message %></h1>
-  <%}%>
   <div class="login-page">
     <div class="form">
-      <form action="/login" class="login-form" method="post">
+      <form action="/register" class="login-form" method="post">
         <input type="text" name="name" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>login</button>

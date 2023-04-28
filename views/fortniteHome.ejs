@@ -20,18 +20,26 @@
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
+      <h1>
+        <%=username%>
+      </h1>
       <% } else { %>
         <img src="../images/vraagteken.png" />
         <% } %>
   </section>
   <nav>
     <ul>
-      <li class="browser"><a href="/">Landing Page</a></li>
-      <li class="ipad"><a href="/">&#8592;</a></li>
-      <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet">Favorieten</a></li>
-      <li><a href="/blacklist">Blacklists</a></li>
-      <li><a href="/login">Login</a></li>
+      <% if (username) { %>
+        <li class="browser"><a href="/">Landing Page</a></li>
+        <li class="ipad"><a href="/">&#8592;</a></li>
+        <li><a href="/fortniteHome">Home</a></li>
+        <li><a href="/favoriet">Favorieten</a></li>
+        <li><a href="/blacklist">Blacklists</a></li>
+        <li><a href="/logout">logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Login</a></li>
+          <% } %>
     </ul>
   </nav>
   <section class="title">
@@ -79,7 +87,7 @@
           <form action="/favoriet" method="post">
             <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
             <input type="hidden" name="image" value="<%= avatarImage[i].images %>">
-            <input type="hidden" name="id" value="<%= avatarImage[i].i %>">
+            <input type="hidden" name="id" value="<%= avatarImage[i]._id %>">
             <button class="choiceIndexButton2" type="submit">Favourite</button>
           </form>
           <div class="modal" data-modal-target="#modal<%= i %>">
@@ -91,10 +99,10 @@
                 <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
                 <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
                 <button class="choiceIndexButton3" type="button"
-                  onclick="toggleTextarea('<%= avatarImage[i]._id %>')">Blacklist</button>
-                <textarea id="blacklistReason<%= avatarImage[i]._id %>" name="blacklistReason"
+                  onclick="toggleTextarea('<%= avatarImage[i].name %>')">Blacklist</button>
+                <textarea id="blacklistReason<%= avatarImage[i].name %>" name="blacklistReason"
                   placeholder="Reason for blacklisting" style="display:none;"></textarea>
-                <button id="submitButton<%= avatarImage[i]._id %>" class="choiceIndexButton3" type="submit"
+                <button id="submitButton<%= avatarImage[i].name %>" class="choiceIndexButton3" type="submit"
                   style="display:none;">Submit</button>
               </form>
             </div>
