@@ -46,7 +46,6 @@ body {
 
 .blacklistLayout li > img {
   border-radius: 10px;
-  background: linear-gradient(to right, #4364f7, #6fb1fc);
 }
 
 .blacklistLayout img {
