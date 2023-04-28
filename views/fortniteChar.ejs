@@ -59,13 +59,15 @@
                       <% } %>
           </div>
           <div class="infoForm">
-            <form action="/favoriet/:id/update">
+            <form action="/favoriet/<%= character.name %>/update" method="post">
+              <input type="hidden" name="name" value="<%=character.name%>">
+              <input type="hidden" name="image" value="<%=character.images%>">
               <label for="wins" class="textForm"><i id="thumbs-up" class="fa fa-thumbs-up"></i></label>
-              <input type="number" id="quantity" name="quantity" min="0" max="5" placeholder="0">
+              <input type="number" id="wins" name="wins" min="0" max="5" placeholder="0" value="<%= character.wins || 0 %>">>
               <label for="loses" class="textForm"><i id="thumbs-down" class="fa fa-thumbs-down"></i></label>
-              <input type="number" id="quantity" name="quantity" min="-5" max="0" placeholder="0"> <br><br>
-              <label class="titleForm" for="Notities">Notes</label><br><br>
-              <textarea name="notitieAvatar" id="notitieAvatar" cols="30" rows="10"></textarea><br><br>
+              <input type="number" id="loses" name="loses" min="0" max="5" placeholder="0" value="<%= character.loses || 0 %>"><br><br>
+              <label class="titleForm" for="notitieAvatar">Notes</label><br><br>
+              <textarea name="notitieAvatar" id="notitieAvatar" cols="30" rows="10" placeholder="<%= character.notitieAvatar %>"></textarea>></textarea><br><br>
               <div class="formSendButton">
                 <input type="reset" value="Reset">
                 <input type="submit" value="Submit">
