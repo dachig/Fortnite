@@ -22,15 +22,15 @@
           <li><a href="/register">Register</a></li>
     </ul>
   </nav>
-  <% if(locals.message) { %>
-    <h1><%=message %></h1>
-  <%}%>
   <div class="login-page">
     <div class="form">
       <form action="/login" class="login-form" method="post">
         <input type="text" name="name" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>login</button>
+        <% if(locals.message) { %>
+          <h1><%=message %></h1>
+        <%}%>
       </form>
     </div>
   </div>

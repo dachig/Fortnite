@@ -1,6 +1,7 @@
 import axios from 'axios';
 import express from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
+import compression from 'compression';
 import session from 'express-session';
 const uri = 'mongodb+srv://rachad:mojito12@cluster0.w2eqvxp.mongodb.net/test';
 const bcrypt = require('bcrypt');
@@ -10,10 +11,11 @@ declare module "express-session" {
   }
 }
 const app = express();
+app.use(compression());//Om de data naar de server klein te houden, alleen de nodige info door te sturen.
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('port', 4000);
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
 //Items die worden doorgestuurd moeten een interface hebben.
@@ -29,53 +31,20 @@ interface Avatar { //Interface voor de items die we toevoegen in api collection
   };
   favoriet: boolean,
 }
-let apiWapons: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
-let apiBackpack: any = [];//Deze array wordt verwijderd wanneer we eenmaal begonnen zijn aan de collection insert.
-let avatars: any[] = [];// Deze array kan aangepast worden, zodat we gebruik maken van api collection.
+let apiPickaxe: any = [];//Array wordt gebruikt om de pickaxe te tonen in fortniteChar.ejs + invoegen in Db collection (pickaxe)
+let apiBackpack: any = [];//Array wordt gebruikt om de backpacks te tonen in fortniteChar.ejs + invoegen in Db collection (api)
+let avatars: any[] = [];//Array wordt gebruikt om de avatars te tonen in fortniteHome.ejs + invoegen in Db collection (api)
 
 app.use(session({
   secret: 'test123',
   resave: false,
   saveUninitialized: true
 }));
-
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.post('/login', async (req, res) => {
-  const client = new MongoClient(uri);
-  try {
-
-    await client.connect();
-    const userCollection = await client.db('fortnite').collection('users');
-    const info = req.body;
-    const user = await userCollection.findOne({ username: info.name });
-
-    if (!user || !(await bcrypt.compare(info.password, user.password))) {
-      res.render('login', {
-        message: 'Wrong username or password',
-      });
-      return;
-    }
-    req.session.name = info.name;
-    console.log(`Fout sesion: ${req.session.name}`);
-    console.log(`fout name: ${info.name}`);
-    res.redirect('fortniteHome');
-
-
-  } catch (e) {
-    console.error(e);
-  } finally {
-    await client.close();
-  }
-});
-
-app.get('/register', (req, res) => {
+/*-------------------------------------------------------------------------registerPagina---------------------------------------------------------------------*/
+app.get('/register', compression(), (req, res) => {
   res.render('register');
 });
-app.post('/register', async (req, res) => {
+app.post('/register', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -100,8 +69,40 @@ app.post('/register', async (req, res) => {
     await client.close();
   }
 });
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------loginPagina------------------------------------------------------------------------*/
+app.get('/login', compression(), (req, res) => {
+  res.render('login');
+});
+app.post('/login', compression(), async (req, res) => {
+  const client = new MongoClient(uri);
+  try {
 
-app.get('/logout', (req, res) => {
+    await client.connect();
+    const userCollection = await client.db('fortnite').collection('users');
+    const info = req.body;
+    const user = await userCollection.findOne({ username: info.name });
+
+    if (!user || !(await bcrypt.compare(info.password, user.password))) {
+      res.render('login', {
+        message: 'Wrong username or password',
+      });
+      return;
+    }
+    req.session.name = info.name;
+    //console.log(`Fout sesion: ${req.session.name}`);
+    //console.log(`fout name: ${info.name}`);
+    res.redirect('fortniteHome');
+
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+});
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------logoutPagina-----------------------------------------------------------------------*/
+app.get('/logout', compression(), (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error(err);
@@ -110,19 +111,18 @@ app.get('/logout', (req, res) => {
     }
   });
 });
-
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 app.get('/', (req, res) => {
   res.render("landingpage");
 });
-
+/*-------------------------------------------------------------------------middelware=>Om te zien of je bent ingelogd-----------------------------------------*/
 const requireLogin = async (req: any, res: any, next: any) => {
   const client = new MongoClient(uri);
-
   try {
     await client.connect();
     const userCollection = await client.db('fortnite').collection('users');
     const sessionID = req.session.name;
-    console.log(sessionID);
+    //console.log(sessionID);
     if (sessionID) {
       const user = await userCollection.findOne({ name: sessionID.name });
       if (user) {
@@ -131,7 +131,7 @@ const requireLogin = async (req: any, res: any, next: any) => {
         res.redirect('/login');
       }
     } else {
-      res.redirect('/login');
+      res.redirect('/register');
     }
   } catch (e) {
     console.log(e);
@@ -140,8 +140,9 @@ const requireLogin = async (req: any, res: any, next: any) => {
     await client.close();
   }
 };
-
-app.post('/fortnitehome/avatar', async (req, res) => {
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------FortniteHome + compression---------------------------------------------------------*/
+app.post('/fortnitehome/avatar', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -162,19 +163,22 @@ app.post('/fortnitehome/avatar', async (req, res) => {
     client.close();
   }
 });
-app.get('/fortnitehome', requireLogin, async (req, res) => {
+/*---------------------------------------------------------------------------fortniteHome get naar server + middelware + compression--------------------------*/
+app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
     const apiCall = client.db('fortnite').collection('api');
+    await apiCall.deleteMany({});
     const avatarCollection = client.db('fortnite').collection('avatar');
-    const favorietCollection = client.db('fortnite').collection('favoriet');
-    const userCollection = client.db('fortnite').collection('users');
+    //const favorietCollection = client.db('fortnite').collection('favoriet');
+    //const userCollection = client.db('fortnite').collection('users');
     const fortniteResponse = await axios.get('https://fortnite-api.theapinetwork.com/items/list');
     const record = fortniteResponse.data;
     const avatars = [];//array wordt terug leeggemaakt;
     let outfitCount = 0;
+    const sessionID = req.session.name;
     for (let i = 0; i < record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
       const item = record.data[random].item;
@@ -190,7 +194,6 @@ app.get('/fortnitehome', requireLogin, async (req, res) => {
         };
         avatars.push(avatar);
         outfitCount++;  // Dit zorgt ervoor dat we the hele api kunnen blijven gebruiken en dat er altijd random items zijn.
-
         if (outfitCount === 4) { // Dit zorgt ervoor dat we maar 4 items laten zien voor de user + 4 items in api collection.
           break; // zodat we uit de for loop kunnen. Je kan dit ook doen in for loop conditie.
         }
@@ -202,8 +205,6 @@ app.get('/fortnitehome', requireLogin, async (req, res) => {
         await apiCall.insertOne(avatar); //Zorgt ervoor dat wanneer er geen obj(existingAvatar) in the api collection zit, dat we 1 voor 1 dat doen.
       }
     }
-    
-    const sessionID = req.session.name;
     const avatarDb = await avatarCollection.findOne({ username: sessionID });
     res.render('fortniteHome', {
       avatarImage: avatars,
@@ -218,7 +219,9 @@ app.get('/fortnitehome', requireLogin, async (req, res) => {
     client.close();
   }
 });
-app.post('/favoriet', async (req, res) => {
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------fortniteHome post request naar server + compression------------------------------*/
+app.post('/favoriet', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -251,7 +254,9 @@ app.post('/favoriet', async (req, res) => {
     await client.close();
   }
 });
-app.get('/favoriet', async (req, res) => {
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------favoriet get request + compression-----------------------------------------------*/
+app.get('/favoriet', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -280,8 +285,9 @@ app.get('/favoriet', async (req, res) => {
     client.close();
   }
 });
-
-app.post('/favoriet/:id/update', async (req, res) => {
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------favoriett post request naar server + compression---------------------------------*/
+app.post('/favoriet/:id/update', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -289,22 +295,21 @@ app.post('/favoriet/:id/update', async (req, res) => {
     let backpackCollection = await client.db('fortnite').collection('backpack');
     let pickaxeCollection = await client.db('fortnite').collection('pickaxe');
     const favorietCollection = await client.db('fortnite').collection('favoriet');
-    const blacklistCollection= await client.db('fortnite').collection('blacklist');
-    let {image, id, backpack, pickaxe, wins, loses, notitieAvatar, name } = req.body;
+    const blacklistCollection = await client.db('fortnite').collection('blacklist');
+    let { image, id, backpack, pickaxe, wins, loses, notitieAvatar, name } = req.body;
     const sessionID = req.session.name;
     let objectDelete: Boolean = false;
-    await backpackCollection.deleteOne({ name: id });
-    await pickaxeCollection.deleteOne({ name: id });
     await favorietCollection.updateOne(
       { name: name, username: sessionID },
       { $set: { wins: parseInt(wins), loses: parseInt(loses), notitieAvatar: notitieAvatar } }
     );
     objectDelete = parseInt(loses) >= 3 + parseInt(wins);
-    const blacklist = await blacklistCollection.find({ username: sessionID }).toArray();
-    if(objectDelete){
-      await blacklistCollection.insertOne({name: name, username: sessionID,images:image, blacklistReason:"personage trekt op niets" });
-      await favorietCollection.deleteOne({name: name, username: sessionID });
+    if (objectDelete) {
+      await blacklistCollection.insertOne({ name: name, username: sessionID, images: image, blacklistReason: "personage trekt op niets" });
+      await favorietCollection.deleteOne({ name: name, username: sessionID });
     }
+    await backpackCollection.deleteOne({ name: id });
+    await pickaxeCollection.deleteOne({ name: id });
     await backpackCollection.insertOne({ name: req.params.id, backpack: backpack });
     await pickaxeCollection.insertOne({ name: req.params.id, pickaxe: pickaxe });
     res.redirect('/favoriet');
@@ -315,7 +320,9 @@ app.post('/favoriet/:id/update', async (req, res) => {
     await client.close();
   }
 });
-app.get("/favoriet/:id", async (req, res) => {
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------id favoriet op favoriet.ejs get request + compression ------------------------------------- */
+app.get("/favoriet/:id", compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -332,14 +339,14 @@ app.get("/favoriet/:id", async (req, res) => {
     const record = fortniteResponse.data;
 
     let apiBackpack = [];
-    let apiWapons = [];
+    let apiPickaxe = [];
     for (let i = 0; i <= record.data.length; i++) {
       const random = Math.floor(Math.random() * record.data.length);
       if (record.data[random].item.type === "backpack") {
         apiBackpack.push(record.data[random]);
       }
       if (record.data[random].item.type === "pickaxe") {
-        apiWapons.push(record.data[random]);
+        apiPickaxe.push(record.data[random]);
       }
     }
     const sessionID = req.session.name;
@@ -348,7 +355,7 @@ app.get("/favoriet/:id", async (req, res) => {
       character: findFavoriet,
       username: req.session.name,
       avatarBackpack: apiBackpack,
-      avatarPickaxe: apiWapons,
+      avatarPickaxe: apiPickaxe,
       avatarDb: avatarDb ? avatarDb.image : null
     });
   } catch (e) {
@@ -358,7 +365,9 @@ app.get("/favoriet/:id", async (req, res) => {
     client.close();
   }
 });
-app.get('/blacklist', async (req, res) => {
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------blacklist.ejs get request + compression --------------------------------------------------- */
+app.get('/blacklist', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -378,7 +387,9 @@ app.get('/blacklist', async (req, res) => {
 });
 //Probleem bij update blacklist textarea, moet worden aangepast.
 //We kunnen een pad aanmaken zoals bij delete post => blacklist/update zodat we the reason kunnen update. Deze post naar blacklist is hetzelfde die in onze fortniteHome.ejs staat.
-app.post('/blacklist', async (req, res) => {
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------blacklist post request + compression------------------------------------------------------- */
+app.post('/blacklist', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -390,7 +401,7 @@ app.post('/blacklist', async (req, res) => {
     const { id, blacklistReason, image } = req.body;
     const blacklistObj = await apiCall.findOne({ _id: new ObjectId(id) });//Deze code neemt de id die we doorsturen en zoekt in de api collection een id die overeenkomt.
     if (blacklistObj) { // Als die id gevonden is, insert we alle gegevens van de form die we doorsturen + de image.
-      await blacklistCollection.insertOne({username: req.session.name, name: blacklistObj.name, images: image, blacklistReason });
+      await blacklistCollection.insertOne({ username: req.session.name, name: blacklistObj.name, images: image, blacklistReason });
     }
     res.redirect('/fortniteHome');
   } catch (e) {
@@ -400,8 +411,10 @@ app.post('/blacklist', async (req, res) => {
     await client.close();
   }
 });
-//Reden voor niet-werking:In the form gebruikte ik gewoon hidden input id, na verschillende inputs te gebruiken => Heb ik gewoon dezelfde hidden inputs gebruikt die staan in form op homepage. Zie blacklist.ejs en homepage forms
-app.post('/blacklist/update', async (req, res) => {
+//Reden voor niet-werking:In the form gebruikte ik gewoon hidden input id, na verschillende inputs te gebruiken => Heb ik gewoon dezelfde hidden inputs gebruikt die staan in form op homepage. Zie blacklist.ejs en homepage forms.
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------id favoriet op favoriet.ejs get request---------------------------------------------------- */
+app.post('/blacklist/update', compression(), async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -426,10 +439,11 @@ app.post('/blacklist/update', async (req, res) => {
     await client.close();
   }
 });
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------blacklist delete post request + compression------------------------------------------------ */
 //Als je /delete achter pad => Niet vergeten dat je in je form voor post action dat ook moet vermelden.
-app.post('/blacklist/delete', async (req, res) => { //Zodat de server weet dat we delete doen.
+app.post('/blacklist/delete', compression(), async (req, res) => { //Zodat de server weet dat we delete doen.
   const client = new MongoClient(uri);
-
   try {
     const id = req.body.id;
     await client.connect();
@@ -442,7 +456,7 @@ app.post('/blacklist/delete', async (req, res) => { //Zodat de server weet dat w
     await client.close();
   }
 });
-
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
 app.listen(app.get("port"), async () => {
   console.log(`The application has started on: http://localhost:${app.get("port")}`);
 });
