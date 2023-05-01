@@ -50,15 +50,37 @@
     <% for (let i=0; i < 4; i++) { %>
       <div class="flip-card" tabIndex="0">
         <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="<%= avatarImage[i].images %>" />
-          </div>
-          <div class="flip-card-back">
-            <h3 class="name">
-              <span>
-                <%= avatarImage[i].name %>
-              </span>
-            </h3>
+          <!--Verandert background op basis van rarity-->
+          <% if(avatarImage[i].rarity=="epic" ) { %>
+            <div class="flip-card-front" style="background: linear-gradient(to left, #c543f1, #851eae)">
+              <% } else if(avatarImage[i].rarity=="legendary" ) {%>
+                <div class="flip-card-front" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                  <% } else if(avatarImage[i].rarity=="uncommon" ) {%>
+                    <div class="flip-card-front" style="background: linear-gradient(to left, #4bd319, #14c123)">
+                      <% } else if(avatarImage[i].rarity=="common" ) {%>
+                        <div class="flip-card-front" style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                          <% } else if(avatarImage[i].rarity=="rare" ) {%>
+                            <div class="flip-card-front" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                    <% } %>
+                      <img src="<%= avatarImage[i].images %>" />
+                </div>
+                <!--Verandert background op basis van rarity-->
+                <% if(avatarImage[i].rarity=="epic" ) { %>
+                  <div class="flip-card-back" style="background: linear-gradient(to left, #c543f1, #851eae)">
+                    <% } else if(avatarImage[i].rarity=="legendary" ) {%>
+                      <div class="flip-card-back" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                        <% } else if(avatarImage[i].rarity=="uncommon" ) {%>
+                          <div class="flip-card-back" style="background: linear-gradient(to left, #4bd319, #14c123)">
+                            <% } else if(avatarImage[i].rarity=="common" ) {%>
+                              <div class="flip-card-back" style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                                <% } else if(avatarImage[i].rarity=="rare" ) {%>
+                                  <div class="flip-card-back" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                          <% } %>
+                  <h3 class="name">
+                    <span>
+                      <%= avatarImage[i].name %>
+                    </span>
+                  </h3>
             <ul name="avatarInformatieDB">
               <li>
                 <%= avatarImage[i].description %>

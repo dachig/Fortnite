@@ -54,7 +54,6 @@ body {
 
 .flip-card-front {
   border-radius: 10px;
-  background: linear-gradient(to left, #4364f7, #6fb1fc);
   color: black;
   z-index: 2;
   justify-content: center;
@@ -68,7 +67,6 @@ body {
 
 .flip-card-back {
   border-radius: 10px;
-  background: linear-gradient(to right, #4364f7, #6fb1fc);
   color: white;
   transform: rotateY(180deg);
   z-index: 1;
