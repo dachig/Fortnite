@@ -40,6 +40,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+
 /*-------------------------------------------------------------------------registerPagina---------------------------------------------------------------------*/
 app.get('/register', compression(), (req, res) => {
   res.render('register');

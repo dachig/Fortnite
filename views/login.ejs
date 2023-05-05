@@ -17,9 +17,15 @@
   <section class="avatarPic">
     <img src="../images/vraagteken.png" />
   </section>
-  <nav>
-    <ul>
-          <li><a href="/register">Register</a></li>
+  <input class="inputheader" type="checkbox" id="toggle">
+  <nav id="navlogin">
+    <label class="navbar-toggler" for="toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+  </label>
+    <ul class="nav-list" id="navlistlogin">
+          <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
     </ul>
   </nav>
   <div class="login-page">
@@ -29,6 +35,8 @@
         <input type="password" name="password" placeholder="password" />
         <button>login</button>
         <% if(locals.message) { %>
+          <br>
+          <br>
           <h1><%=message %></h1>
         <%}%>
       </form>
