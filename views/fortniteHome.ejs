@@ -25,6 +25,9 @@
       </h1>
       <% } else { %>
         <img src="../images/vraagteken.png" />
+        <h1>
+          <%=username%>
+        </h1>
         <% } %>
   </section>
   <nav>
@@ -44,6 +47,9 @@
   </nav>
   <section class="title">
     <p>Prepare yourself for battle by choosing one of these avatars!</p>
+    <form action="/fortnitehome/refreshpage" method="post">
+      <button type="submit">Refresh Page</button>
+    </form>
   </section>
 
   <section class="mainBodyHome">
@@ -94,9 +100,11 @@
               <li>
                 <%= avatarImage[i].series %>
               </li>
+              <article class="sterItem">
               <% if (avatarImage[i].favoriet) { %>
                 <img src="../images/ster.jpg" />
                 <% } %>
+                </article>
             </ul>
           </div>
         </div>
