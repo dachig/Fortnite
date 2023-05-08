@@ -34,11 +34,17 @@
       <span class="bar"></span>
   </label>
     <ul class="nav-list">
-        <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
+      <% if (username) { %>
+         <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
         <li class="nav-item"><a class="nav-link" href="/fortniteHome">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/favoriet">Favorieten</a></li>
         <li class="nav-item"><a class="nav-link" href="/blacklist">Blacklists</a></li>
         <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+          <% } %>
+
     </ul>
   </nav>
   <section class="blacklistLayout">
