@@ -18,6 +18,9 @@
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
+      <h1 class="username">
+        <%=username.toUpperCase()%>
+      </h1>
       <% } else { %>
         <img src="../images/vraagteken.png" />
         <h1>
@@ -25,14 +28,19 @@
         </h1>
         <% } %>
   </section>
+   <input class="inputheader" type="checkbox" id="toggle">
   <nav>
-    <ul>
-      <li class="browser"><a href="/">Landing Page</a></li>
-      <li class="ipad"><a href="/">&#8592;</a></li>
-      <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet">Favorieten</a></li>
-      <li><a href="/blacklist">Blacklists</a></li>
-      <li><a href="/login">Login</a></li>
+    <label class="navbar-toggler" for="toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+  </label>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
+        <li class="nav-item"><a class="nav-link" href="/fortniteHome">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/favoriet">Favorieten</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blacklist">Blacklists</a></li>
+        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
     </ul>
   </nav>
   <main>
