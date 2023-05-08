@@ -20,6 +20,9 @@
       <img src="<%= avatarDb %>" />
       <% } else { %>
         <img src="../images/vraagteken.png" />
+        <h1>
+          <%=username%>
+        </h1>
         <% } %>
   </section>
   <nav>
@@ -88,18 +91,18 @@
             <div class="charSolo">
               <div class="TitleInputForm">
                 <h2 class="itemTitleh2">
-                  <%= avatarBackpack[i].item.name %>
+                  <%= avatarBackpack[i].name %>
                 </h2>
-                <input type="radio" name="backpack" value="<%= avatarBackpack[i].item.images.icon %>">
+                <input type="radio" name="backpack" value="<%= avatarBackpack[i].icon %>">
               </div>
-              <label for="backpack" name="<%=i%>"><img src="<%= avatarBackpack[i].item.images.icon %>" /></label> <br>
+              <label for="backpack" name="<%=i%>"><img src="<%=avatarBackpack[i].icon %>" /></label> <br>
               <div class="TitleInputForm">
                 <h2 class="itemTitleh2">
-                  <%= avatarBackpack[i].item.name %>
+                  <%= avatarPickaxe[i].name %>
                 </h2>
-                <input type="radio" name="pickaxe" value="<%= avatarPickaxe[i].item.images.icon %>">
+                <input type="radio" name="pickaxe" value="<%= avatarPickaxe[i].icon %>">
               </div>
-              <label for="pickaxe" name="<%=i%>"><img src="<%= avatarPickaxe[i].item.images.icon %>" /></label>
+              <label for="pickaxe" name="<%=i%>"><img src="<%= avatarPickaxe[i].icon %>" /></label>
             </div>
             <% } %>
         </section>

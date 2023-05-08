@@ -30,6 +30,9 @@
         <input type="text" name="name" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>Register</button>
+        <% if(locals.message) {%>
+          <%=message%>
+          <%}%>
       </form>
     </div>
   </div>

@@ -19,18 +19,27 @@
   <section class="avatarPic">
     <% if (avatarDb) { %>
       <img src="<%= avatarDb %>" />
+      <%=username%>
       <% } else { %>
         <img src="../images/vraagteken.png" />
+        <h1>
+          <%=username%>
+        </h1>
         <% } %>
   </section>
   <nav>
     <ul>
-      <li class="browser"><a href="/">Landing Page</a></li>
-      <li class="ipad"><a href="/">&#8592;</a></li>
-      <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet">Favorieten</a></li>
-      <li><a href="/blacklist">Blacklists</a></li>
-      <li><a href="/login">Login</a></li>
+      <% if (username) { %>
+        <li class="browser"><a href="/">Landing Page</a></li>
+        <li class="ipad"><a href="/">&#8592;</a></li>
+        <li><a href="/fortniteHome">Home</a></li>
+        <li><a href="/favoriet">Favorieten</a></li>
+        <li><a href="/blacklist">Blacklists</a></li>
+        <li><a href="/logout">logout</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Login</a></li>
+          <% } %>
     </ul>
   </nav>
   <section class="blacklistLayout">
