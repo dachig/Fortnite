@@ -9,6 +9,8 @@
 }
 .username{
   color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .avatarPic{
   text-align: center;
@@ -24,9 +26,9 @@ nav {
   height: 75px;
   line-height: 75px;
   background: #404040;
+  padding: 0 2rem;
 
 }
-
 
 nav .nav-list {
   display: flex;
@@ -35,7 +37,7 @@ nav .nav-list {
 nav .nav-list .nav-item {
   cursor: pointer;
   height: 100%;
-  padding: 0 30px;
+  padding: 0 20px;
 }
 
 nav .nav-list .nav-item:hover {
@@ -49,7 +51,7 @@ nav .nav-list .nav-link {
   font-size: 18px;
   font-weight: 500;
 }
-
+/* delete later, voorlopig laat ff
 @media (max-width: 935px) {
 
   nav {
@@ -61,6 +63,7 @@ nav .nav-list .nav-link {
   }
 
 }
+*/
 
 @media (max-width: 675px) {
   nav{
@@ -119,7 +122,7 @@ nav .nav-list .nav-link {
   .inputheader:checked ~ nav .nav-list {
     transform: translateY(0);
     z-index: 1;
-    margin-top: 85px;
+    margin-top: 105px;
   }
   .inputheader:checked ~ nav #navlistregister,#navlistlogin{
     margin-top: 70px;
