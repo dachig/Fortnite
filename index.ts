@@ -8,6 +8,9 @@ declare module "express-session" {
     name: string;
   }
 }
+const headers = {
+  'Authorization': 'b2ef35ae-62f6-439a-9bb0-954426e7bf03'
+};
 const uri = 'mongodb+srv://rachad:mojito12@cluster0.w2eqvxp.mongodb.net/test';
 const bcrypt = require('bcrypt');
 const app = express();
@@ -184,7 +187,7 @@ app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
   try {
     await client.connect();
     const apiCall = client.db('fortnite').collection('api');
-    //await apiCall.deleteMany({});
+    await apiCall.deleteMany({});
     const avatarCollection = client.db('fortnite').collection('avatar');
     const favorietCollection = client.db('fortnite').collection('favoriet');
     const blacklistCollection = client.db('fortnite').collection('blacklist');
@@ -194,16 +197,16 @@ app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
     avatars= [];
     while (avatars.length < 4) {
       const random = Math.floor(Math.random() * record.data.length);
-      const item = record.data[random].item;
-      if (!(blacklistedItems.find((i) => i.name === item.name))) {
-        if (item.type === 'outfit' && item.images.featured) {
+      const item = await record.data[random];
+      if (!(blacklistedItems.some((i) => i.name === item.name))) {
+        if (item.type.value === 'outfit' && item.images.featured) {
           const avatar: Avatar = {
             username: sessionID,
             name: item.name,
             description: item.description,
-            type: item.type,
-            rarity: item.rarity,
-            series: item.series,
+            type: item.type.value,
+            rarity: item.rarity.backendValue,
+            series: item.series?.value,
             images: item.images.featured,
             favoriet: false,
             blacklisted: false
@@ -373,8 +376,8 @@ app.get("/favoriet/:id", compression(), async (req, res) => {
     let apiPickaxe = [];
     while (apiBackpack.length < 4) {
       const random = Math.floor(Math.random() * record.data.length);
-      const item = record.data[random].item;
-      if (item.type === "backpack") {
+      const item = record.data[random];
+      if (item.type.value === "backpack") {
         apiBackpack.push({
           icon: item.images.icon,
           name: item.name
@@ -383,8 +386,8 @@ app.get("/favoriet/:id", compression(), async (req, res) => {
     }
     while (apiPickaxe.length < 4) {
       const random = Math.floor(Math.random() * record.data.length);
-      const item = record.data[random].item;
-      if (item.type === "pickaxe") {
+      const item = record.data[random];
+      if (item.type.value === "pickaxe") {
         apiPickaxe.push({
           icon: item.images.icon,
           name: item.name
@@ -439,7 +442,6 @@ app.post('/blacklist', compression(), async (req, res) => {
     const { id, blacklistReason, image, name } = req.body;
     const blacklistIndex = await blacklistCollection.findOne({ _id: new ObjectId(id) });
     await favorietCollection.deleteOne({ name: name, username: sessionID });
-    await apiCollection.deleteOne({ name: name, username: sessionID });
     if (!blacklistIndex) {
       await blacklistCollection.insertOne({ username: sessionID, name: name, images: image, blacklistReason });
       await apiCollection.updateOne({ username: sessionID, name: name }, { $set: { blacklisted: true } });
@@ -497,7 +499,7 @@ app.post('/blacklist/delete', compression(), async (req, res) => {
 });
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
 app.listen(app.get("port"), async () => {
-  fortniteIndexApi = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
+  fortniteIndexApi = await axios.get("https://fortnite-api.com/v2/cosmetics/br",{headers});
   console.log(`The application has started on: http://localhost:${app.get("port")}`);
 });
 export { }

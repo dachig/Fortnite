@@ -65,7 +65,17 @@
                   <% } %>
                     <% if(character.rarity){ %>
                       <p><span>Rarity:</span>
-                        <%= character.rarity %>
+                        <% if (character.rarity=="EFortRarity::Epic" ) { %>
+                          <p>Epic</p>
+                        <% } else if (character.rarity=="EFortRarity::Legendary" ) { %>
+                          <p>Legendary</p>
+                        <% } else if (character.rarity=="EFortRarity::Uncommon" ) { %>
+                          <p>Uncommon</p>
+                        <% } else if (character.rarity=="EFortRarity::Common" ) { %>
+                          <p>Common</p>
+                        <% } else if (character.rarity=="EFortRarity::Rare" ) { %>
+                          <p>Rare</p>
+                        <% } %>  
                       </p>
                       <% } %>
           </div>
