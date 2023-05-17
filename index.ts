@@ -328,6 +328,7 @@ app.post('/favoriet/:id/update', compression(), async (req, res) => {
   const client = new MongoClient(uri);
   try {
     await client.connect();
+    
     let backpackCollection = await client.db('fortnite').collection('backpack');
     let pickaxeCollection = await client.db('fortnite').collection('pickaxe');
     const favorietCollection = await client.db('fortnite').collection('favoriet');
@@ -339,6 +340,8 @@ app.post('/favoriet/:id/update', compression(), async (req, res) => {
       { name: name, username: sessionID },
       { $set: { wins: parseInt(wins), loses: parseInt(loses), notitieAvatar: notitieAvatar } }
     );
+    const cachedResponse = cache.get(sessionID); // connectie met cache maken.
+    if (cachedResponse) cache.del(sessionID);
     objectDelete = parseInt(loses) >= 3 + parseInt(wins);
     if (objectDelete) {
       await blacklistCollection.insertOne({ name: name, username: sessionID, images: image, blacklistReason: "personage trekt op niets" });
@@ -440,7 +443,7 @@ app.post('/blacklist', compression(), async (req, res) => {
     const favorietCollection = await client.db('fortnite').collection('favoriet');
     const apiCollection = await client.db('fortnite').collection('api');
     const { id, blacklistReason, image, name } = req.body;
-    const blacklistIndex = await blacklistCollection.findOne({ _id: new ObjectId(id) });
+    const blacklistIndex = await blacklistCollection.findOne({name:name,image:image });
     await favorietCollection.deleteOne({ name: name, username: sessionID });
     if (!blacklistIndex) {
       await blacklistCollection.insertOne({ username: sessionID, name: name, images: image, blacklistReason });
