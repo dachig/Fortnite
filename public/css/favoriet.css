@@ -25,13 +25,16 @@ html body {
   margin-bottom: 20px;
   width: 90vw;
 }
-.articleAvatar > img{
+.backPick{
   width: 100%;
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-
+.questionmarkFavoriet {
+  width: 100%;
+  max-height: auto;
+}
 .testing {
   text-align: center;
   
@@ -63,12 +66,8 @@ html body {
   
       
   }
-   .articleAvatar > img{
+   .articleAvatar  img{
     height: 250px;
     width: 250px;
   }
   }
-.articleAvatar .questionmarkFavoriet{
-  height: 400px;
-  width: 350px;
-}

@@ -38,13 +38,13 @@
   </label>
     <ul class="nav-list">
       <% if (username) { %>
-        <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
-        <li class="nav-item"><a class="nav-link" href="/fortniteHome">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/favoriet">Favorieten</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blacklist">Blacklists</a></li>
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
+        <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
+        <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
+        <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
+        <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
         <% } else { %>
-          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <a class="nav-link" href="/login"><li class="nav-item">Login</li></a>
           <% } %>
     </ul>
   </nav>
@@ -58,12 +58,12 @@
             </a>
           </h1>
           <section class="articleAvatar">
-            <img src="<%= favoriteImages[i].images %>">
+            <img class="backPick" src="<%= favoriteImages[i].images %>">
             <% let backpackFound=false; %>
               <% for (let j=0; j < backpack.length; j++) { %>
                 <% if (favoriteImages[i].name===backpack[j].name && backpack[j].backpack) { %>
                   <% backpackFound=true; %>
-                    <img src="<%= backpack[j].backpack %>" />
+                    <img class="backPick" src="<%= backpack[j].backpack %>" />
                     <% } %>
                       <% } %>
                         <% if (!backpackFound) { %>
@@ -73,7 +73,7 @@
                               <% for (let k=0; k < pickaxe.length; k++) { %>
                                 <% if (favoriteImages[i].name===pickaxe[k].name && pickaxe[k].pickaxe) { %>
                                   <% pickaxeFound=true; %>
-                                    <img src="<%= pickaxe[k].pickaxe %>" />
+                                    <img class="backPick" src="<%= pickaxe[k].pickaxe %>" />
                                     <% } %>
                                       <% } %>
                                         <% if (!pickaxeFound) { %>

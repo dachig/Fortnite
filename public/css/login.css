@@ -85,3 +85,11 @@ body{
   color: white;
   padding-bottom: 50px;
 }
+
+/* MEDIA QUERIES */
+
+@media (max-width: 675px) {
+  .login-page {
+    margin-top: 50px;
+  }
+}
