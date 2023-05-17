@@ -25,9 +25,7 @@ body {
 .blacklistLayout {
   padding-top: 50px;
   padding-bottom: 50px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+
 }
 
 .blacklistLayout ul {
