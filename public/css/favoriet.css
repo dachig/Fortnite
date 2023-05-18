@@ -23,16 +23,20 @@ html body {
   border-radius: 25px;
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 90vw;
+  width: 80vw;
+}
+.articleAvatar{
+  display: flex;
+  justify-content: space-evenly;
 }
 .backPick{
-  width: 100%;
+  width: 25%;
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 .questionmarkFavoriet {
-  width: 100%;
+  width: 16%;
   max-height: auto;
 }
 .testing {
@@ -48,9 +52,6 @@ html body {
   color: wheat;
 }
 
-.testing img {
-  width: 25%;
-}
 .avatarPic img {
   height: 100px;
   width: 100px;
@@ -60,14 +61,13 @@ html body {
 /*------------------------------------------------------Media queries---------------------------------------------------------*/
 @media all and (max-width: 675px) {
   .articleAvatar{
-    display: flex;
     flex-direction: column;
     align-items: center;
   
       
   }
    .articleAvatar  img{
-    height: 250px;
-    width: 250px;
+    height: auto;
+    width: 200px;
   }
   }
