@@ -52,6 +52,21 @@
     <section class="testing">
       <% for (let i=0; i < favoriteImages.length; i++) { %>
         <div class="charSolo">
+
+          <% if(favoriteImages[i].rarity=="EFortRarity::Epic" ) { %>
+            <div class="flip-card-front" style="background: linear-gradient(to left, #c543f1, #851eae)">
+              <% } else if(favoriteImages[i].rarity=="EFortRarity::Legendary" ) {%>
+                <div class="flip-card-front" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                  <% } else if(favoriteImages[i].rarity=="EFortRarity::Uncommon" ) {%>
+                    <div class="flip-card-front" style="background: linear-gradient(to left, #4bd319, #14c123)">
+                      <% } else if(favoriteImages[i].rarity=="EFortRarity::Common" ) {%>
+                        <div class="flip-card-front" style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                          <% } else if(favoriteImages[i].rarity=="EFortRarity::Rare" ) {%>
+                            <div class="flip-card-front" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                              <% } else {%>
+                                <div class="flip-card-front" style="background: linear-gradient(to left, grey, black);">
+                    <% } %>
+
           <h1>
             <a href="/favoriet/<%= favoriteImages[i]._id %>">
               <%= favoriteImages[i].name %>

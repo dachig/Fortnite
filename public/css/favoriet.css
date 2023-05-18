@@ -18,8 +18,7 @@ html body {
   padding-bottom: 15px;
 }
 
-.charSolo {
-  background-color: #6fb1fc;
+.charSolo div{
   border-radius: 25px;
   margin-top: 20px;
   margin-bottom: 20px;
