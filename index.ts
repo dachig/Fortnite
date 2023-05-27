@@ -13,6 +13,9 @@ const bcrypt = require('bcrypt');
 const app = express();
 const NodeCache = require('node-cache');
 const cache = new NodeCache({ stdTTL: 600 });
+const headers = {
+  'Authorization': '56477f6d-d13c-4c86-b464-a29a3975d9e6'
+};
 app.use(compression());//Om de data naar de server klein te houden, alleen de nodige info door te sturen.
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -194,9 +197,9 @@ app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
     avatars= [];
     while (avatars.length < 4) {
       const random = Math.floor(Math.random() * record.data.length);
-      const item = record.data[random].item;
+      const item = record.data[random];
       if (!(blacklistedItems.find((i) => i.name === item.name))) {
-        if (item.type === 'outfit' && item.images.featured) {
+        if (item.type.value === 'outfit' && item.images.featured) {
           const avatar: Avatar = {
             username: sessionID,
             name: item.name,
@@ -497,7 +500,7 @@ app.post('/blacklist/delete', compression(), async (req, res) => {
 });
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
 app.listen(app.get("port"), async () => {
-  fortniteIndexApi = await axios.get("https://fortnite-api.theapinetwork.com/items/list");
+  fortniteIndexApi= await axios.get("https://fortnite-api.com/v2/cosmetics/br",{headers});
   console.log(`The application has started on: http://localhost:${app.get("port")}`);
 });
 export { }
