@@ -35,13 +35,17 @@
       <span class="bar"></span>
       <span class="bar"></span>
   </label>
-    <ul class="nav-list">
-        <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
-        <li class="nav-item"><a class="nav-link" href="/fortniteHome">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/favoriet">Favorieten</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blacklist">Blacklists</a></li>
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-    </ul>
+
+  <ul class="nav-list">
+
+      <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
+      <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
+      <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
+      <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
+      <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
+      
+  </ul>
+  
   </nav>
   <main>
     <h2 class="itemTopName">
@@ -65,7 +69,17 @@
                   <% } %>
                     <% if(character.rarity){ %>
                       <p><span>Rarity:</span>
-                        <%= character.rarity %>
+                        <% if (character.rarity=="EFortRarity::Epic" ) { %>
+                          <p>Epic</p>
+                        <% } else if (character.rarity=="EFortRarity::Legendary" ) { %>
+                          <p>Legendary</p>
+                        <% } else if (character.rarity=="EFortRarity::Uncommon" ) { %>
+                          <p>Uncommon</p>
+                        <% } else if (character.rarity=="EFortRarity::Common" ) { %>
+                          <p>Common</p>
+                        <% } else if (character.rarity=="EFortRarity::Rare" ) { %>
+                          <p>Rare</p>
+                        <% } %>  
                       </p>
                       <% } %>
           </div>

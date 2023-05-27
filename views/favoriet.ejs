@@ -38,13 +38,13 @@
   </label>
     <ul class="nav-list">
       <% if (username) { %>
-        <li class="nav-item"><a class="nav-link" href="/">Landing Page</a></li>
-        <li class="nav-item"><a class="nav-link" href="/fortniteHome">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/favoriet">Favorieten</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blacklist">Blacklists</a></li>
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
+        <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
+        <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
+        <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
+        <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
         <% } else { %>
-          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <a class="nav-link" href="/login"><li class="nav-item">Login</li></a>
           <% } %>
     </ul>
   </nav>
@@ -52,18 +52,33 @@
     <section class="testing">
       <% for (let i=0; i < favoriteImages.length; i++) { %>
         <div class="charSolo">
+
+          <% if(favoriteImages[i].rarity=="EFortRarity::Epic" ) { %>
+            <div class="flip-card-front" style="background: linear-gradient(to left, #c543f1, #851eae)">
+              <% } else if(favoriteImages[i].rarity=="EFortRarity::Legendary" ) {%>
+                <div class="flip-card-front" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                  <% } else if(favoriteImages[i].rarity=="EFortRarity::Uncommon" ) {%>
+                    <div class="flip-card-front" style="background: linear-gradient(to left, #4bd319, #14c123)">
+                      <% } else if(favoriteImages[i].rarity=="EFortRarity::Common" ) {%>
+                        <div class="flip-card-front" style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                          <% } else if(favoriteImages[i].rarity=="EFortRarity::Rare" ) {%>
+                            <div class="flip-card-front" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                              <% } else {%>
+                                <div class="flip-card-front" style="background: linear-gradient(to left, grey, black);">
+                    <% } %>
+
           <h1>
             <a href="/favoriet/<%= favoriteImages[i]._id %>">
               <%= favoriteImages[i].name %>
             </a>
           </h1>
           <section class="articleAvatar">
-            <img src="<%= favoriteImages[i].images %>">
+            <img class="backPick" src="<%= favoriteImages[i].images %>">
             <% let backpackFound=false; %>
               <% for (let j=0; j < backpack.length; j++) { %>
                 <% if (favoriteImages[i].name===backpack[j].name && backpack[j].backpack) { %>
                   <% backpackFound=true; %>
-                    <img src="<%= backpack[j].backpack %>" />
+                    <img class="backPick" src="<%= backpack[j].backpack %>" />
                     <% } %>
                       <% } %>
                         <% if (!backpackFound) { %>
@@ -73,7 +88,7 @@
                               <% for (let k=0; k < pickaxe.length; k++) { %>
                                 <% if (favoriteImages[i].name===pickaxe[k].name && pickaxe[k].pickaxe) { %>
                                   <% pickaxeFound=true; %>
-                                    <img src="<%= pickaxe[k].pickaxe %>" />
+                                    <img class="backPick" src="<%= pickaxe[k].pickaxe %>" />
                                     <% } %>
                                       <% } %>
                                         <% if (!pickaxeFound) { %>

@@ -18,20 +18,26 @@ html body {
   padding-bottom: 15px;
 }
 
-.charSolo {
-  background-color: #6fb1fc;
+.charSolo div{
   border-radius: 25px;
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 90vw;
+  width: 80vw;
 }
-.articleAvatar > img{
-  width: 100%;
+.articleAvatar{
+  display: flex;
+  justify-content: space-evenly;
+}
+.backPick{
+  width: 25%;
   height: auto;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-
+.questionmarkFavoriet {
+  width: 16%;
+  max-height: auto;
+}
 .testing {
   text-align: center;
   
@@ -45,9 +51,6 @@ html body {
   color: wheat;
 }
 
-.testing img {
-  width: 25%;
-}
 .avatarPic img {
   height: 100px;
   width: 100px;
@@ -57,18 +60,13 @@ html body {
 /*------------------------------------------------------Media queries---------------------------------------------------------*/
 @media all and (max-width: 675px) {
   .articleAvatar{
-    display: flex;
     flex-direction: column;
     align-items: center;
   
       
   }
-   .articleAvatar > img{
-    height: 250px;
-    width: 250px;
+   .articleAvatar  img{
+    height: auto;
+    width: 200px;
   }
   }
-.articleAvatar .questionmarkFavoriet{
-  height: 400px;
-  width: 350px;
-}
