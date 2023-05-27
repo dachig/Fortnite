@@ -8,9 +8,9 @@ declare module "express-session" {
     name: string;
   }
 }
-const headers = {
-  'Authorization': 'b2ef35ae-62f6-439a-9bb0-954426e7bf03'
-};
+// const headers = {
+//   'Authorization': 'b2ef35ae-62f6-439a-9bb0-954426e7bf03'
+// };
 const uri = 'mongodb+srv://rachad:mojito12@cluster0.w2eqvxp.mongodb.net/test';
 const bcrypt = require('bcrypt');
 const app = express();
