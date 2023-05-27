@@ -1,55 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header.ejs') %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/reset.css" />
-  <link rel="stylesheet" href="../css/blacklist.css">
-  <link rel="stylesheet" href="../css/footer.css">
-  <link rel="stylesheet" href="../css/header.css" />
-
-
-  <title>Document</title>
-</head>
-
-<body>
-
-  <section class="avatarPic">
-    <% if (avatarDb) { %>
-      <img src="<%= avatarDb %>" />
-      <h1 class="username">
-        <%=username.toUpperCase()%>
-      </h1>
-      <% } else { %>
-        <img src="../images/vraagteken.png" />
-        <h1>
-          <%=username%>
-        </h1>
-        <% } %>
-  </section>
-  <input class="inputheader" type="checkbox" id="toggle">
-  <nav>
-    <label class="navbar-toggler" for="toggle">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-  </label>
-  <ul class="nav-list">
-    <% if (username) { %>
-      <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
-      <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
-      <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
-      <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
-      <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
-      <% } else { %>
-        <a class="nav-link" href="/login"><li class="nav-item">Login</li></a>
-        <a class="nav-link" href="/register"><li class="nav-item">Register</li></a>
-
-        <% } %>
-  </ul>
-  </nav>
   <section class="blacklistLayout">
     <ul>
       <% for (let i=0; i < blacklist.length; i++) { %>
