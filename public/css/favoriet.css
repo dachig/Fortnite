@@ -38,16 +38,16 @@ html body {
   width: 16%;
   max-height: auto;
 }
-.testing {
+.testingChar {
   text-align: center;
   
 }
-.testing a {
+.testingChar a {
   text-decoration: none;
   color: white;
 }
 
-.testing h1 {
+.testingChar h1 {
   color: wheat;
 }
 

@@ -1,52 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header.ejs') %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="../css/reset.css" />
-  <link rel="stylesheet" href="../css/infoPage.css">
-  <link rel="stylesheet" href="../css/footer.css">
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-
-  <section class="avatarPic">
-    <% if (avatarDb) { %>
-      <img src="<%= avatarDb %>" />
-      <h1 class="username">
-        <%=username.toUpperCase()%>
-      </h1>
-      <% } else { %>
-        <img src="../images/vraagteken.png" />
-        <h1>
-          <%=username%>
-        </h1>
-        <% } %>
-  </section>
-   <input class="inputheader" type="checkbox" id="toggle">
-  <nav>
-    <label class="navbar-toggler" for="toggle">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-  </label>
-
-  <ul class="nav-list">
-
-      <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
-      <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
-      <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
-      <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
-      <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
-      
-  </ul>
-  
-  </nav>
   <main>
     <h2 class="itemTopName">
       <%=character.name%>

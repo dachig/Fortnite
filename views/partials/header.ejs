@@ -5,23 +5,51 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/header.css" />
-  <title>Document</title>
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/favoriet.css">
+  <link rel="stylesheet" href="../css/infoPage.css">
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../css/blacklist.css">
+
+  <title>Fortnite_MSI</title>
 </head>
 
 <body>
   <section class="avatarPic">
-    <img src="../images/vraagteken.png" />
+    <% if (avatarDb) { %>
+      <img src="<%= avatarDb %>" />
+      <h1 class="username">
+        <%=username.toUpperCase()%>
+      </h1>
+      <% } else { %>
+        <img src="../images/vraagteken.png" />
+        <h1>
+          <%=username%>
+        </h1>
+        <% } %>
   </section>
+  <input class="inputheader" type="checkbox" id="toggle">
   <nav>
-    <ul>
-      <li class="browser"><a href="/">Landing Page</a></li>
-      <li class="ipad"><a href="/">&#8592;</a></li>
-      <li><a href="/fortniteHome">Home</a></li>
-      <li><a href="/favoriet-images">Favorieten</a></li>
-      <li><a href="/blacklist">Blacklists</a></li>
-      <li><a href="/login">Login</a></li>
-    </ul>
+    <label class="navbar-toggler" for="toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <ul class="nav-list">
+        <% if (username) { %>
+          <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
+          <a class="nav-link" href="/fortniteHome"><li class="nav-item">Home</li></a>
+          <a class="nav-link" href="/favoriet"><li class="nav-item">Favorieten</li></a>
+          <a class="nav-link" href="/blacklist"><li class="nav-item">Blacklists</li></a>
+          <a class="nav-link" href="/logout"><li class="nav-item">Logout</li></a>
+          <% } else { %>
+            <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
+            <a class="nav-link" href="/login"><li class="nav-item">Login</li></a>
+            <a class="nav-link" href="/register"><li class="nav-item">Register</li></a>
+    
+            <% } %>
+      </ul>
   </nav>
-  
