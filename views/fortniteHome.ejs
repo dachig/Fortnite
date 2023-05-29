@@ -68,20 +68,17 @@
               <li>
                 <%= avatarImage[i].description %>
               </li>
-              <li>
-                <%= avatarImage[i].type %>
-              </li>
-              <li>
+              <li class="avatarType">
                 <% if (avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
-                  <p>Epic</p>
+                  <p><%= avatarImage[i].type %>: Epic</p>
                 <% } else if (avatarImage[i].rarity=="EFortRarity::Legendary" ) { %>
-                  <p>Legendary</p>
+                  <p><%= avatarImage[i].type %>: Legendary</p>
                 <% } else if (avatarImage[i].rarity=="EFortRarity::Uncommon" ) { %>
-                  <p>Uncommon</p>
+                  <p><%= avatarImage[i].type %>: Uncommon</p>
                 <% } else if (avatarImage[i].rarity=="EFortRarity::Common" ) { %>
-                  <p>Common</p>
+                  <p><%= avatarImage[i].type %>: Common</p>
                 <% } else if (avatarImage[i].rarity=="EFortRarity::Rare" ) { %>
-                  <p>Rare</p>
+                  <p><%= avatarImage[i].type %>:  Rare</p>
                 <% } %>                
               </li>
               <% if(avatarImage[i].series){ %> 
