@@ -1,0 +1,20 @@
+.start {
+    opacity: 0;
+    transform: translateX(-20%);
+    transition: all 1s;
+}
+
+.start:nth-child(2) {
+    transition-delay: 200ms;
+}
+.start:nth-child(3) {
+    transition-delay: 400ms;
+}
+.start:nth-child(4) {
+    transition-delay: 600ms;
+}
+
+.end {
+    opacity: 1;
+    transform: translateX(0%);
+}

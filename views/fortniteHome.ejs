@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animation.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="./js/script.js"></script>
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -18,127 +19,165 @@
 <body>
 
   <%- include('partials/header.ejs') %>
-  <section class="title">
-    <p>Prepare yourself for battle by choosing one of these avatars!</p>
-    <form action="/fortnitehome/refreshpage" method="post">
-      <button type="submit"><img src="images/refresh.png" alt=""></button>
-    </form>
-  </section>
+    <section class="title">
+      <p>Prepare yourself for battle by choosing one of these avatars!</p>
+      <form action="/fortnitehome/refreshpage" method="post">
+        <button type="submit"><img src="images/refresh.png" alt=""></button>
+      </form>
+    </section>
 
-  <section class="mainBodyHome">
-    <% for (let i=0; i < 4; i++) { %>
-      <div class="flip-card" tabIndex="0">
-        <div class="flip-card-inner">
-          <!--Verandert background op basis van rarity-->
-          <% if(avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
-            <div class="flip-card-front" style="background: linear-gradient(to left, #c543f1, #851eae)">
-              <% } else if(avatarImage[i].rarity=="EFortRarity::Legendary" ) {%>
-                <div class="flip-card-front" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
-                  <% } else if(avatarImage[i].rarity=="EFortRarity::Uncommon" ) {%>
-                    <div class="flip-card-front" style="background: linear-gradient(to left, #4bd319, #14c123)">
-                      <% } else if(avatarImage[i].rarity=="EFortRarity::Common" ) {%>
-                        <div class="flip-card-front" style="background: linear-gradient(to left, #585851, #a9a9a3)">
-                          <% } else if(avatarImage[i].rarity=="EFortRarity::Rare" ) {%>
-                            <div class="flip-card-front" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
-                              <% } else {%>
-                                <div class="flip-card-front" style="background: linear-gradient(to left, grey, black);">
-                    <% } %>
-                      <img src="<%= avatarImage[i].images %>" />
-                </div>
-                <!--Verandert background op basis van rarity-->
-                <% if(avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
-                  <div class="flip-card-back" style="background: linear-gradient(to left, #c543f1, #851eae)">
-                    <% } else if(avatarImage[i].rarity=="EFortRarity::Legendary" ) {%>
-                      <div class="flip-card-back" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
-                        <% } else if(avatarImage[i].rarity=="EFortRarity::Uncommon" ) {%>
-                          <div class="flip-card-back" style="background: linear-gradient(to left, #4bd319, #14c123)">
-                            <% } else if(avatarImage[i].rarity=="EFortRarity::Common" ) {%>
-                              <div class="flip-card-back" style="background: linear-gradient(to left, #585851, #a9a9a3)">
-                                <% } else if(avatarImage[i].rarity=="EFortRarity::Rare" ) {%>
-                                  <div class="flip-card-back" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
-                                    <% } else {%>
-                                      <div class="flip-card-back" style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
-                          <% } %>
-                  <h3 class="name">
-                    <span>
-                      <%= avatarImage[i].name %>
-                    </span>
-                  </h3>
-            <ul name="avatarInformatieDB">
-              <li>
-                <%= avatarImage[i].description %>
-              </li>
-              <li class="avatarType">
-                <% if (avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
-                  <p><%= avatarImage[i].type %>: Epic</p>
-                <% } else if (avatarImage[i].rarity=="EFortRarity::Legendary" ) { %>
-                  <p><%= avatarImage[i].type %>: Legendary</p>
-                <% } else if (avatarImage[i].rarity=="EFortRarity::Uncommon" ) { %>
-                  <p><%= avatarImage[i].type %>: Uncommon</p>
-                <% } else if (avatarImage[i].rarity=="EFortRarity::Common" ) { %>
-                  <p><%= avatarImage[i].type %>: Common</p>
-                <% } else if (avatarImage[i].rarity=="EFortRarity::Rare" ) { %>
-                  <p><%= avatarImage[i].type %>:  Rare</p>
-                <% } %>                
-              </li>
-              <% if(avatarImage[i].series){ %> 
-              <li>
-                <%= avatarImage[i].series%>
-              </li>
-              <%}%>
-              <article class="sterItem">
-              <% if (avatarImage[i].favoriet) { %>
-                <img src="../images/ster.jpg" />
-                <% } %>
-                </article>
-            </ul>
-          </div>
-        </div>
-        <section class="choiceIndex">
-          <form action="/fortnitehome/avatar" method="post" name="avatar">
-            <input type="hidden" name="id" value="<%= i %>">
-            <input type="hidden" name="avatarImage" value="<%= avatarImage[i].images %>">
-            <button class="choiceIndexButton1" type="submit">Avatar</button>
-          </form>
-          <form action="/favoriet" method="post">
-            <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
-            <input type="hidden" name="image" value="<%= avatarImage[i].images %>">
-            <input type="hidden" name="id" value="<%= avatarImage[i]._id %>">
-            <button class="choiceIndexButton2" type="submit">Favorite</button>
-          </form>
-          <div class="modal" data-modal-target="#modal<%= i %>">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <form method="post" action="/blacklist">
-                <input type="hidden" name="id" value="<%= avatarImage[i]._id %>" />
-                <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
-                <input type="hidden" name="image" value="<%= avatarImage[i].images %> %>" />
-                <button class="choiceIndexButton3" type="button"
-                  onclick="toggleTextarea('<%= avatarImage[i].name %>')">Blacklist</button>
-                <textarea id="blacklistReason<%= avatarImage[i].name %>" name="blacklistReason"
-                  placeholder="Reason for blacklisting" style="display:none;"></textarea>
-                <button id="submitButton<%= avatarImage[i].name %>" class="choiceIndexButton3" type="submit"
-                  style="display:none;">Submit</button>
-              </form>
-            </div>
-          </div>
-        </section>
+    <section class="mainBodyHome">
+      <% for (let i=0; i < 4; i++) { %>
+        <div class="flip-card start" tabIndex="0">
+          <div class="flip-card-inner">
+            <!--Verandert background op basis van rarity-->
+            <% if(avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
+              <div class="flip-card-front" style="background: linear-gradient(to left, #c543f1, #851eae)">
+                <% } else if(avatarImage[i].rarity=="EFortRarity::Legendary" ) {%>
+                  <div class="flip-card-front" style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                    <% } else if(avatarImage[i].rarity=="EFortRarity::Uncommon" ) {%>
+                      <div class="flip-card-front" style="background: linear-gradient(to left, #4bd319, #14c123)">
+                        <% } else if(avatarImage[i].rarity=="EFortRarity::Common" ) {%>
+                          <div class="flip-card-front" style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                            <% } else if(avatarImage[i].rarity=="EFortRarity::Rare" ) {%>
+                              <div class="flip-card-front"
+                                style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                                <% } else {%>
+                                  <div class="flip-card-front"
+                                    style="background: linear-gradient(to left, grey, black);">
+                                    <% } %>
+                                      <img src="<%= avatarImage[i].images %>" />
+                                  </div>
+                                  <!--Verandert background op basis van rarity-->
+                                  <% if(avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
+                                    <div class="flip-card-back"
+                                      style="background: linear-gradient(to left, #c543f1, #851eae)">
+                                      <% } else if(avatarImage[i].rarity=="EFortRarity::Legendary" ) {%>
+                                        <div class="flip-card-back"
+                                          style="background: linear-gradient(to left, #ff8c00, #f9d005)">
+                                          <% } else if(avatarImage[i].rarity=="EFortRarity::Uncommon" ) {%>
+                                            <div class="flip-card-back"
+                                              style="background: linear-gradient(to left, #4bd319, #14c123)">
+                                              <% } else if(avatarImage[i].rarity=="EFortRarity::Common" ) {%>
+                                                <div class="flip-card-back"
+                                                  style="background: linear-gradient(to left, #585851, #a9a9a3)">
+                                                  <% } else if(avatarImage[i].rarity=="EFortRarity::Rare" ) {%>
+                                                    <div class="flip-card-back"
+                                                      style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                                                      <% } else {%>
+                                                        <div class="flip-card-back"
+                                                          style="background: linear-gradient(to left, #4364f7, #6fb1fc);">
+                                                          <% } %>
+                                                            <h3 class="name">
+                                                              <span>
+                                                                <%= avatarImage[i].name %>
+                                                              </span>
+                                                            </h3>
+                                                            <ul name="avatarInformatieDB">
+                                                              <li>
+                                                                <%= avatarImage[i].description %>
+                                                              </li>
+                                                              <li class="avatarType">
+                                                                <% if (avatarImage[i].rarity=="EFortRarity::Epic" ) { %>
+                                                                  <p>
+                                                                    <%= avatarImage[i].type %>: Epic
+                                                                  </p>
+                                                                  <% } else if
+                                                                    (avatarImage[i].rarity=="EFortRarity::Legendary" ) {
+                                                                    %>
+                                                                    <p>
+                                                                      <%= avatarImage[i].type %>: Legendary
+                                                                    </p>
+                                                                    <% } else if
+                                                                      (avatarImage[i].rarity=="EFortRarity::Uncommon" )
+                                                                      { %>
+                                                                      <p>
+                                                                        <%= avatarImage[i].type %>: Uncommon
+                                                                      </p>
+                                                                      <% } else if
+                                                                        (avatarImage[i].rarity=="EFortRarity::Common" )
+                                                                        { %>
+                                                                        <p>
+                                                                          <%= avatarImage[i].type %>: Common
+                                                                        </p>
+                                                                        <% } else if
+                                                                          (avatarImage[i].rarity=="EFortRarity::Rare" )
+                                                                          { %>
+                                                                          <p>
+                                                                            <%= avatarImage[i].type %>: Rare
+                                                                          </p>
+                                                                          <% } %>
+                                                              </li>
+                                                              <% if(avatarImage[i].series){ %>
+                                                                <li>
+                                                                  <%= avatarImage[i].series%>
+                                                                </li>
+                                                                <%}%>
+                                                                  <article class="sterItem">
+                                                                    <% if (avatarImage[i].favoriet) { %>
+                                                                      <img src="../images/ster.jpg" />
+                                                                      <% } %>
+                                                                  </article>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <section class="choiceIndex">
+                                                      <form action="/fortnitehome/avatar" method="post" name="avatar">
+                                                        <input type="hidden" name="id" value="<%= i %>">
+                                                        <input type="hidden" name="avatarImage"
+                                                          value="<%= avatarImage[i].images %>">
+                                                        <button class="choiceIndexButton1" type="submit">Avatar</button>
+                                                      </form>
+                                                      <form action="/favoriet" method="post">
+                                                        <input type="hidden" name="name"
+                                                          value="<%= avatarImage[i].name %>">
+                                                        <input type="hidden" name="image"
+                                                          value="<%= avatarImage[i].images %>">
+                                                        <input type="hidden" name="id"
+                                                          value="<%= avatarImage[i]._id %>">
+                                                        <button class="choiceIndexButton2"
+                                                          type="submit">Favorite</button>
+                                                      </form>
+                                                      <div class="modal" data-modal-target="#modal<%= i %>">
+                                                        <div class="modal-header">
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <form method="post" action="/blacklist">
+                                                            <input type="hidden" name="id"
+                                                              value="<%= avatarImage[i]._id %>" />
+                                                            <input type="hidden" name="name"
+                                                              value="<%= avatarImage[i].name %>">
+                                                            <input type="hidden" name="image"
+                                                              value="<%= avatarImage[i].images %> %>" />
+                                                            <button class="choiceIndexButton3" type="button"
+                                                              onclick="toggleTextarea('<%= avatarImage[i].name %>')">Blacklist</button>
+                                                            <textarea id="blacklistReason<%= avatarImage[i].name %>"
+                                                              name="blacklistReason"
+                                                              placeholder="Reason for blacklisting"
+                                                              style="display:none;"></textarea>
+                                                            <button id="submitButton<%= avatarImage[i].name %>"
+                                                              class="choiceIndexButton3" type="submit"
+                                                              style="display:none;">Submit</button>
+                                                          </form>
+                                                        </div>
+                                                      </div>
+                                                    </section>
 
-      </div>
-      <% } %>
-  </section>
-  <script>
-    const toggleTextarea = (id) => {
-      const textarea = document.getElementById(`blacklistReason${id}`);
-      const submitButton = document.getElementById(`submitButton${id}`);
-      if (textarea.style.display === 'none') {
-        textarea.style.display = 'block';
-        submitButton.style.display = 'block';
-      } else {
-        textarea.style.display = 'none';
-        submitButton.style.display = 'none';
-      }
-    };
-  </script>
-<%- include('partials/footer.ejs') %>
+                                                </div>
+                                                <% } %>
+                                                  <script src="./js/animation.js"></script>
+    </section>
+    <script>
+      const toggleTextarea = (id) => {
+        const textarea = document.getElementById(`blacklistReason${id}`);
+        const submitButton = document.getElementById(`submitButton${id}`);
+        if (textarea.style.display === 'none') {
+          textarea.style.display = 'block';
+          submitButton.style.display = 'block';
+        } else {
+          textarea.style.display = 'none';
+          submitButton.style.display = 'none';
+        }
+      };
+    </script>
+    <%- include('partials/footer.ejs') %>
