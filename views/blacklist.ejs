@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/blacklist.css">
-
-  <title>Document</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <title>Blacklist</title>
 </head>
 
 <body>
@@ -32,7 +32,7 @@
               <input type="hidden" name="id" value="<%= blacklist[i]._id %>" />
               <input type="hidden" name="name" value="<%= blacklist[i].name %>">
               <input type="hidden" name="image" value="<%= blacklist[i].images %> %>" />
-              <textarea rows="4" name="blacklistReason"><%= blacklist[i].blacklistReason %></textarea>
+              <textarea rows="4" name="blacklistReason" value="blacklist reason"><%= blacklist[i].blacklistReason %></textarea>
               <button type="submit">Save</button>
             </form>
             <form method="post" action="/blacklist/delete">

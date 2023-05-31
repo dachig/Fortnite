@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="../css/login.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/header.css" />
-
-  <title>Document</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <title>Login</title>
 </head>
 
 <body>
@@ -23,10 +23,14 @@
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
-  </label>
+    </label>
     <ul class="nav-list" id="navlistlogin">
-      <a class="nav-link" href="/"><li class="nav-item">Landing Page</li></a>
-      <a class="nav-link" href="/register"><li class="nav-item">Register</li></a>
+      <a class="nav-link" href="/">
+        <li class="nav-item">Landing Page</li>
+      </a>
+      <a class="nav-link" href="/register">
+        <li class="nav-item">Register</li>
+      </a>
     </ul>
   </nav>
   <div class="login-page">
@@ -34,12 +38,14 @@
       <form action="/login" class="login-form" method="post">
         <input type="text" name="name" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
-        <button>login</button>
+        <button>Login</button>
         <% if(locals.message) { %>
           <br>
           <br>
-          <h1><%=message %></h1>
-        <%}%>
+          <h1>
+            <%=message %>
+          </h1>
+          <%}%>
       </form>
     </div>
   </div>

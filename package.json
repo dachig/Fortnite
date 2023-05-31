@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Bouhjar Rachad",
+  "authors": "Bouhjar Rachad",
+  "contributors": ["Pidiev Ramazan","Ramoussi Sofyan","Giorgobiani Dachi"],
   "license": "ISC",
   "devDependencies": {
     "@types/compression": "^1.7.2",

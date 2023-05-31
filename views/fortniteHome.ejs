@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="./js/script.js"></script>
-
-  <title>Document</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <title>Home</title>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
   <%- include('partials/header.ejs') %>
   <section class="title">
     <p>Prepare yourself for battle by choosing one of these avatars!</p>
-    <form action="/fortnitehome/refreshphow to showcase projects on dev page?age" method="post">
+    <form action="/fortnitehome/refreshpage" method="post">
       <button type="submit"><img src="images/refresh.png" alt=""></button>
     </form>
   </section>
@@ -104,7 +104,7 @@
             <input type="hidden" name="name" value="<%= avatarImage[i].name %>">
             <input type="hidden" name="image" value="<%= avatarImage[i].images %>">
             <input type="hidden" name="id" value="<%= avatarImage[i]._id %>">
-            <button class="choiceIndexButton2" type="submit">Favourite</button>
+            <button class="choiceIndexButton2" type="submit">Favorite</button>
           </form>
           <div class="modal" data-modal-target="#modal<%= i %>">
             <div class="modal-header">
@@ -141,4 +141,4 @@
       }
     };
   </script>
-    <%- include('partials/footer.ejs') %>
+<%- include('partials/footer.ejs') %>
