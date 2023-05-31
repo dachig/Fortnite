@@ -53,7 +53,7 @@ ul li:not(nav ul li) {
   text-decoration: underline;
   text-align: right;
   float: left;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .infoForm {
@@ -137,7 +137,8 @@ ul li:not(nav ul li) {
 
 .formSendButton input {
   background-color: #6fb1fc;
-  border-radius: 10px;
+  border-radius: 5px;
+  padding: 5px;
   text-transform: uppercase;
   cursor: pointer;
 }
