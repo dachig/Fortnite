@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "authors": "Bouhjar Rachad",
+  "author": "Bouhjar Rachad",
   "contributors": ["Pidiev Ramazan","Ramoussi Sofyan","Giorgobiani Dachi"],
   "license": "ISC",
   "devDependencies": {
