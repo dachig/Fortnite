@@ -19,8 +19,9 @@ interface Avatar {
   images: {
     featured: string;
   };
-  favoriet?: boolean,
+  favoriet?: boolean;
   blacklisted?: boolean;
+  introduction?: string;
 }
 const uri = 'mongodb+srv://rachad:mojito12@cluster0.w2eqvxp.mongodb.net/test';
 const bcrypt = require('bcrypt');
@@ -213,7 +214,8 @@ app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
             series: item.series?.value,
             images: item.images.featured,
             favoriet: false, 
-            blacklisted: false 
+            blacklisted: false,
+            introduction: item.introduction.text
           };
           avatars.push(avatar);
         }
@@ -270,7 +272,8 @@ app.post('/favoriet', compression(), async (req, res) => {
       type: item.type,
       rarity: item.rarity,
       series: item.series,
-      favoriet: true 
+      favoriet: true,
+      introduction: item.introduction.text
     };
     if (!existingFavObject) { 
       await favorietCollection.insertOne(favoriet);

@@ -80,16 +80,18 @@ body {
   text-align: center;
 }
 
-.flip-card-back>ul>li {
-  padding-top: 10px;
-}
-
-h3 {
-  font-size: 20px;
+.name{
+  font-size: 1.7rem;
   font-family: Verdana, sans-serif;
   font-weight: bold;
   color: #fff;
 }
+
+.flip-card-back>ul>li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 
 .flip-card-front img {
   padding-top: 1rem;
