@@ -515,7 +515,7 @@ app.post('/blacklist/delete', compression(), async (req, res) => {
   }
 });
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-app.listen(app.get("port"), async () => {
+app.listen(process.env.Port || app.get("port"), async () => {
   fortniteIndexApi = await axios.get("https://fortnite-api.com/v2/cosmetics/br", { headers });
   console.log(`The application has started on: http://localhost:${app.get("port")}`);
 });
