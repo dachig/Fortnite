@@ -2,11 +2,11 @@
   <% if (avatarDb) { %>
     <img src="<%= avatarDb %>" />
     <h1 class="username">
-      <%=username.toUpperCase()%>
+      <%=username%>
     </h1>
     <% } else { %>
       <img src="../images/vraagteken.png" />
-      <h1>
+      <h1 class="username">
         <%=username%>
       </h1>
       <% } %>
