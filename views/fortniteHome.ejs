@@ -170,17 +170,5 @@
                                                 <% } %>
                                                   <script src="./js/animation.js"></script>
     </section>
-    <script>
-      const toggleTextarea = (id) => {
-        const textarea = document.getElementById(`blacklistReason${id}`);
-        const submitButton = document.getElementById(`submitButton${id}`);
-        if (textarea.style.display === 'none') {
-          textarea.style.display = 'block';
-          submitButton.style.display = 'block';
-        } else {
-          textarea.style.display = 'none';
-          submitButton.style.display = 'none';
-        }
-      };
-    </script>
+    
     <%- include('partials/footer.ejs') %>
