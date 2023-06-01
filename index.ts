@@ -273,7 +273,7 @@ app.post('/favoriet', compression(), async (req, res) => {
       rarity: item.rarity,
       series: item.series,
       favoriet: true,
-      introduction: item.introduction.text
+      introduction: item.introduction
     };
     if (!existingFavObject) { 
       await favorietCollection.insertOne(favoriet);
