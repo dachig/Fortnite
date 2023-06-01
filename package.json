@@ -31,11 +31,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/s131576/2023ProjectFornite.git"
+    "url": "git+https://github.com/dachig/Fortnite.git"
   },
   "bugs": {
-    "url": "https://github.com/s131576/2023ProjectFornite/issues"
+    "url": "https://github.com/dachig/Fortnite/issues"
   },
-  "homepage": "https://github.com/s131576/2023ProjectFornite#readme",
+  "homepage": "https://github.com/dachig/Fortnite#readme",
   "keywords": []
 }
