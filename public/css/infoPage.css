@@ -68,6 +68,9 @@ ul li:not(nav ul li) {
 .infoForm textarea {
   width: 20rem;
   border-radius: 10px;
+  border: #6fb1fc 5px solid;
+  padding: 5px;
+  font-size: 1rem;
 }
 
 #thumbs-up {

@@ -192,7 +192,7 @@ app.get('/fortnitehome', requireLogin, compression(), async (req, res) => {
   try {
     await client.connect();
     const apiCall = client.db('fortnite').collection('api');
-    await apiCall.deleteMany({});
+    //await apiCall.deleteMany({});
     const avatarCollection = await client.db('fortnite').collection('avatar');
     const favorietCollection = await client.db('fortnite').collection('favoriet');
     const blacklistCollection = await client.db('fortnite').collection('blacklist');
